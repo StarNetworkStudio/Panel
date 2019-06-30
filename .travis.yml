@@ -1,8 +1,5 @@
 language: php
-
-php:
-  - 7.3
-  - nightly
+php: 7.3
 
 install: true
 script: true
