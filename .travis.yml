@@ -1,5 +1,7 @@
 language: php
 php: 7.3
 
+notifications:
+   webhooks: https://oapi.dingtalk.com/robot/send?access_token=2df54d9b00fef949f3c58d93b9eccbad08a741db47706ebdfbcdfc92cfb33afb
 install: true
 script: true
