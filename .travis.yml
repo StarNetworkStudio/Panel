@@ -1,7 +1,11 @@
 language: php
-php: 7.3
-
 notifications:
    webhooks: https://oapi.dingtalk.com/robot/send?access_token=2df54d9b00fef949f3c58d93b9eccbad08a741db47706ebdfbcdfc92cfb33afb
-install: true
+install: composer install
 script: true
+matrix:
+  include:
+  - php: 7.3
+  - node_js: 10
+    language: node_js
+    install: yarn
