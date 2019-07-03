@@ -46,11 +46,10 @@ if (!function_exists('panel_menu')) {
             if ($value) {
                 $content .= sprintf(
                     '<a href="%s" class="kt-menu__link">
-                            <i class="kt-menu__link-icon %s %s"></i>
+                            <i class="kt-menu__link-icon %s"></i>
                             <span class="kt-menu__link-text">%s</span>
                             </a>',
                     url((string)$value['link']),
-                    $value['icon'] == 'fa-circle' ? 'far' : 'fas',
                     (string)$value['icon'],
                     trans((string)$value['title'])
                 );
