@@ -48,7 +48,6 @@ if (!function_exists('panel_menu')) {
                 }
             }
 
-            $classes = [];
             $father_classes=[];
             $Sub_classes =[];
             $active ? ($father[] = 'kt-menu__item--active') : null;
