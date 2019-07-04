@@ -49,13 +49,15 @@ if (!function_exists('panel_menu')) {
             }
 
             $classes = [];
-            $father_classes=[];
-            $Sub_classes =[];
+            $father_classes = [];
+            $Sub_classes = [];
             $active ? ($father[] = 'kt-menu__item--active') : null;
             $active ? ($Sub_classes[] = 'kt-menu__item--open kt-menu__item--here') : null;
+            isset($value['children']) ? ($classes[] = ' data-ktmenu-submenu-toggle="hover"') : null;
+            $subs = count($classes) ? sprintf('%s', implode(' ', $classes)) : '';
+            $attr = count($father_classes) ? count($father_classes) : count($Sub_classes) ? sprintf('%s', implode(' ', $Sub_classes)) : '';
+            $content .= "<li class='kt-menu__item kt-menu__item--submenu {$attr}' aria-haspopup='true'{$subs}>";
             if (isset($value['children'])) {
-                $attr = count($Sub_classes) ? sprintf('%s', implode(' ', $Sub_classes)) : '';
-                $content .= "<li class='kt-menu__item kt-menu__item--submenu {$attr}' aria-haspopup='true' data-ktmenu-submenu-toggle='hover'>";
                 $content .= sprintf(
                     '<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <i class="kt-menu__link-icon %s"></i>
@@ -83,8 +85,6 @@ if (!function_exists('panel_menu')) {
                     </div>';
             } else {
                 if ($value) {
-                    $attr = count($father_classes) ? sprintf('%s', implode(' ', $father_classes)) : '';
-                    $content .= "<li class='kt-menu__item {$attr}' aria-haspopup='true'>";
                     $content .= sprintf(
                         '<a href="%s" class="kt-menu__link">
                             <i class="kt-menu__link-icon %s"></i>
