@@ -39,19 +39,82 @@ if (!function_exists('panel_menu')) {
         $content = '';
         foreach ($data as $key => $value) {
             $active = app('request')->is(@$value['link']);
+            foreach ((array)@$value['children'] as $childKey => $childValue) {
+                if (app('request')->is(@$childValue['link'])) {
+                    $active = true;
+                }
+            }
+            $classes = [];
+            if (isset($value['children'])) {
+                $active ? ($classes[] = 'kt-menu__item--open kt-menu__item--here') : null;
+                $attr = count($classes) ? sprintf('%s', implode(' ', $classes)) : '';
+                $content .= "<li class='kt-menu__item kt-menu__item--submenu {$attr}' aria-haspopup='true' data-ktmenu-submenu-toggle='hover'>";
+                $content .= sprintf(
+                    '<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                    <i class="kt-menu__link-icon %s"></i>
+                    <span class="kt-menu__link-text">%s</span>
+                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                    ',
+                    $value['icon'],
+                    trans($value['title'])
+                );
+
+                // recurse
+                $content .= sprintf(
+                    '<div class="kt-menu__submenu ">
+                    <span class="kt-menu__arrow"></span>
+                    <ul class="kt-menu__subnav">
+                    <li class="kt-menu__item kt-menu__item--parent" aria-haspopup="true">
+                    <span class="kt-menu__link">
+                    <span class="kt-menu__link-text">%s</span>
+                    </span>
+                    </li>',
+                    trans($value['title'])
+                    ) . panel_menu_children($value) .
+                    '</ul>
+                    </div>';
+            } else {
+                if ($value) {
+                    $active ? ($classes[] = 'kt-menu__item--active') : null;
+                    $attr = count($classes) ? sprintf('%s', implode(' ', $classes)) : '';
+                    $content .= "<li class='kt-menu__item {$attr}' aria-haspopup='true'>";
+                    $content .= sprintf(
+                        '<a href="%s" class="kt-menu__link">
+                            <i class="kt-menu__link-icon %s"></i>
+                            <span class="kt-menu__link-text">%s</span>
+                            </a>',
+                        url((string)$value['link']),
+                        (string)$value['icon'],
+                        trans((string)$value['title'])
+                    );
+                }
+            }
+            $content .= '</li>';
+        }
+        return $content;
+    }
+
+    //子菜单
+    function panel_menu_children($data)
+    {
+        $content = '';
+        foreach ((array)@$data['children'] as $childKey => $childValue) {
+            $active = app('request')->is(@$childValue['link']);
             $classes = [];
             $active ? ($classes[] = 'kt-menu__item--active') : null;
             $attr = count($classes) ? sprintf('%s', implode(' ', $classes)) : '';
             $content .= "<li class='kt-menu__item {$attr}' aria-haspopup='true'>";
-            if ($value) {
+            if ($childValue) {
                 $content .= sprintf(
                     '<a href="%s" class="kt-menu__link">
-                            <i class="kt-menu__link-icon %s"></i>
-                            <span class="kt-menu__link-text">%s</span>
-                            </a>',
-                    url((string)$value['link']),
-                    (string)$value['icon'],
-                    trans((string)$value['title'])
+                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                    <span></span>
+                    </i>
+                    <span class="kt-menu__link-text">%s</span>
+                    </a>',
+                    url((string)$childValue['link']),
+                    trans((string)$childValue['title'])
                 );
             }
             $content .= '</li>';

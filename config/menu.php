@@ -29,13 +29,14 @@ $menu['admin'] = [
     ['title' => '邀请码管理', 'link' => 'admin/players', 'icon' => 'fa fa-puzzle-piece'],
     ['title' => '系统设置', 'link' => 'admin/options', 'icon' => 'fa fa-cog'],
     //children
-/*    [
+    [
         'title' => '测试',
-        'icon' => 'fa fa-code-branch',
+        'icon' => 'flaticon2-pie-chart-4',
         'children' => [
-            ['title' => '测试1', 'link' => 'admin/test', 'icon' => 'fa fa-feather-alt'],
+            ['title' => '测试1', 'link' => 'admin/test'],
+            ['title' => '测试2', 'link' => 'admin/test'],
         ],
-    ],*/
+    ],
 ];
 
 return $menu;
