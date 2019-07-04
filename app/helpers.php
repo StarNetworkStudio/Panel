@@ -37,17 +37,24 @@ if (!function_exists('panel_menu')) {
     function panel_menu_render($data)
     {
         $content = '';
+
         foreach ($data as $key => $value) {
             $active = app('request')->is(@$value['link']);
+
+            // also set parent as active if any child is active
             foreach ((array)@$value['children'] as $childKey => $childValue) {
                 if (app('request')->is(@$childValue['link'])) {
                     $active = true;
                 }
             }
+
             $classes = [];
+            $father_classes=[];
+            $Sub_classes =[];
+            $active ? ($father[] = 'kt-menu__item--active') : null;
+            $active ? ($Sub_classes[] = 'kt-menu__item--open kt-menu__item--here') : null;
             if (isset($value['children'])) {
-                $active ? ($classes[] = 'kt-menu__item--open kt-menu__item--here') : null;
-                $attr = count($classes) ? sprintf('%s', implode(' ', $classes)) : '';
+                $attr = count($Sub_classes) ? sprintf('%s', implode(' ', $Sub_classes)) : '';
                 $content .= "<li class='kt-menu__item kt-menu__item--submenu {$attr}' aria-haspopup='true' data-ktmenu-submenu-toggle='hover'>";
                 $content .= sprintf(
                     '<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -62,7 +69,7 @@ if (!function_exists('panel_menu')) {
 
                 // recurse
                 $content .= sprintf(
-                    '<div class="kt-menu__submenu ">
+                        '<div class="kt-menu__submenu ">
                     <span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                     <li class="kt-menu__item kt-menu__item--parent" aria-haspopup="true">
@@ -70,14 +77,13 @@ if (!function_exists('panel_menu')) {
                     <span class="kt-menu__link-text">%s</span>
                     </span>
                     </li>',
-                    trans($value['title'])
+                        trans($value['title'])
                     ) . panel_menu_children($value) .
                     '</ul>
                     </div>';
             } else {
                 if ($value) {
-                    $active ? ($classes[] = 'kt-menu__item--active') : null;
-                    $attr = count($classes) ? sprintf('%s', implode(' ', $classes)) : '';
+                    $attr = count($father_classes) ? sprintf('%s', implode(' ', $father_classes)) : '';
                     $content .= "<li class='kt-menu__item {$attr}' aria-haspopup='true'>";
                     $content .= sprintf(
                         '<a href="%s" class="kt-menu__link">
