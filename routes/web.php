@@ -12,4 +12,20 @@
 */
 
 Route::get('/', 'PagesController@root')->name('root');
-
+Route::view('test', 'index');
+//管理
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', 'AdminController@index');
+    Route::get('users', 'AdminController@users');
+    Route::get('players', 'AdminController@players');
+    Route::get('options', 'AdminController@options');
+    Route::get('test', 'AdminController@test');
+    Route::any('/UserList', 'AdminController@getUserList');
+});
+//用户
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', 'UserController@index');
+});
+Route::group(['prefix' => 'auth'], function () {
+    Auth::routes();
+});
