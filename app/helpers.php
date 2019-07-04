@@ -50,7 +50,7 @@ if (!function_exists('panel_menu')) {
 
             $father_classes=[];
             $Sub_classes =[];
-            $active ? ($father[] = 'kt-menu__item--active') : null;
+            $active ? ($father_classes[] = 'kt-menu__item--active') : null;
             $active ? ($Sub_classes[] = 'kt-menu__item--open kt-menu__item--here') : null;
             if (isset($value['children'])) {
                 $attr = count($Sub_classes) ? sprintf('%s', implode(' ', $Sub_classes)) : '';
