@@ -13,6 +13,9 @@
 
 Route::get('/', 'PagesController@root')->name('root');
 Route::view('test', 'index');
+Route::group(['prefix' => 'auth'], function () {
+    Auth::routes();
+});
 //管理
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
@@ -25,7 +28,4 @@ Route::group(['prefix' => 'admin'], function () {
 //用户
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', 'UserController@index');
-});
-Route::group(['prefix' => 'auth'], function () {
-    Auth::routes();
 });
