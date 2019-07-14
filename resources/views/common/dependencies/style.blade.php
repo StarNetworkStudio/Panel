@@ -1,4 +1,5 @@
 <!--begin::Page Vendors Styles(used by this page) -->
+@yield('style')
 <link href="{{assets('vendors/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css"/>
 <!--end::Page Vendors Styles -->
 <!--begin::Global Theme Styles(used by all pages) -->
@@ -11,4 +12,3 @@
 <link href="{{assets('css/demo1/skins/brand/navy.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{assets('css/demo1/skins/aside/navy.css')}}" rel="stylesheet" type="text/css"/>
 <!--end::Layout Skins -->
-@yield('style')
