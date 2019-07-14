@@ -1,7 +1,7 @@
 language: php
 notifications:
    webhooks: https://oapi.dingtalk.com/robot/send?access_token=2df54d9b00fef949f3c58d93b9eccbad08a741db47706ebdfbcdfc92cfb33afb
-install: composer install
+install: composer install --no-interaction --prefer-dist
 script: true
 matrix:
   include:
