@@ -18,14 +18,9 @@ Route::group(['prefix' => 'auth'], function () {
 });
 //管理
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', 'AdminController@index');
-    Route::get('users', 'AdminController@users');
-    Route::get('players', 'AdminController@players');
-    Route::get('options', 'AdminController@options');
-    Route::get('test', 'AdminController@test');
-    Route::any('/UserList', 'AdminController@getUserList');
+    Route::view('/', 'admin.index');
 });
 //用户
 Route::group(['prefix' => 'user'], function () {
-    Route::get('/', 'UserController@index');
+    Route::view('/', 'user.index');
 });
