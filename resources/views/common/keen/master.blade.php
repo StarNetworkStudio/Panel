@@ -8,6 +8,7 @@
   <meta name="description" content="Latest updates and statistic charts">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!--begin::Fonts -->
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
   <script>
@@ -25,10 +26,14 @@
   @include('common.dependencies.style')
   <link rel="shortcut icon" href="{{assets('media/logos/favicon.ico')}}"/>
 </head>
+
+@php
+  $user = auth()->user();
+@endphp
+
 <!-- end::Head -->
 <!-- begin::Body -->
-<body
-  class="kt-page--loading-enabled kt-page--loading kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--static kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+<body class="kt-page--loading-enabled kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--static kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--static">
 @include('common.keen.partials._layout-page-loader')
 @include('common.keen._layout')
 @include('common.dependencies.script')

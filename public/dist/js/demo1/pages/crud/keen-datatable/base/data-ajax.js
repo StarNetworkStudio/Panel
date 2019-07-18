@@ -13,7 +13,7 @@ var KTDatatableRemoteAjaxDemo = function() {
 				type: 'remote',
 				source: {
 					read: {
-						url: 'https://keenthemes.com/keen/themes/themes/keen/dist/preview/inc/api/datatables/demos/default.php',
+						url: '/admin/user-list',
 						map: function(raw) {
 							// sample data mapping
 							var dataSet = raw;

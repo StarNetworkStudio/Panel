@@ -1,12 +1,12 @@
 <div class="kt-user-card kt-margin-b-40 kt-margin-b-30-tablet-and-mobile"
-     style="background-image: url(./assets/media/misc/head_bg_sm.jpg)">
+     style="background-image: url({{assets('media/misc/head_bg_sm.jpg')}})">
   <div class="kt-user-card__wrapper">
     <div class="kt-user-card__pic">
-      <img alt="Pic" src="{{assets('media/users/300_21.jpg')}}"/>
+      <img alt="Pic" src="{{avatar($user,300)}}"/>
     </div>
     <div class="kt-user-card__details">
-      <div class="kt-user-card__name">Alex Stone</div>
-      <div class="kt-user-card__position">CTO, Loop Inc.</div>
+      <div class="kt-user-card__name">{{$user->name}}</div>
+      <div class="kt-user-card__position">{{$user->email}}</div>
     </div>
   </div>
 </div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87cbf2966f2156f029da6240d2a89a9b",
+    "content-hash": "00c7ae7148d993e7ad90be6d5e6c1a2a",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -306,6 +306,60 @@
                 "validator"
             ],
             "time": "2019-06-23T10:14:27+00:00"
+        },
+        {
+            "name": "elfsundae/laravel-gravatar",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ElfSundae/laravel-gravatar.git",
+                "reference": "0e95e2565e8db216e798f2a000d2e5d2ae30c112"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ElfSundae/laravel-gravatar/zipball/0e95e2565e8db216e798f2a000d2e5d2ae30c112",
+                "reference": "0e95e2565e8db216e798f2a000d2e5d2ae30c112",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "laravel/framework": "~5.0",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "~5.7|~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Elf Sundae",
+                    "email": "elf.sundae@gmail.com",
+                    "homepage": "https://0x123.com"
+                }
+            ],
+            "description": "The easiest way to generate Gravatar avatar URL.",
+            "homepage": "https://github.com/ElfSundae/laravel-gravatar",
+            "keywords": [
+                "gravatar",
+                "helper",
+                "laravel"
+            ],
+            "time": "2018-01-05T21:39:01+00:00"
         },
         {
             "name": "erusev/parsedown",
