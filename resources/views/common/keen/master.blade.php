@@ -28,7 +28,7 @@
 </head>
 
 @php
-  $user = auth()->user();
+  $user = Auth::user();
 @endphp
 
 <!-- end::Head -->

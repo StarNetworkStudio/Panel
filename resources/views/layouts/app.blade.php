@@ -15,7 +15,9 @@
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 </head>
-
+@php
+  $user = Auth::user();
+@endphp
 <body>
   <div id="app" class="{{ route_class() }}-page">
 
