@@ -10,7 +10,7 @@ function route_class()
 
 if (! function_exists('avatar')) {
 
-    function avatar(User $user, $size)
+    function avatar(User $user, $size=null)
     {
         $hash = md5(strtolower(trim($user->email)));
 
