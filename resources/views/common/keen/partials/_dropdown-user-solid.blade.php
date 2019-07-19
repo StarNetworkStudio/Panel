@@ -35,7 +35,9 @@
       <span class="kt-nav__link-text">Settings</span>
     </a>
   </li>
-  <li class="kt-nav__item kt-nav__item--custom kt-margin-t-15"><a href="?page=custom/user/login-v1" target="_blank"
-                                                                  class="btn btn-label-brand btn-upper btn-sm btn-bold">Sign
-      Out</a></li>
+  <li class="kt-nav__item kt-nav__item--custom kt-margin-t-15">
+    <a href="#" class="btn btn-label-brand btn-upper btn-sm btn-bold">
+      登出
+    </a>
+  </li>
 </ul>

@@ -17,7 +17,7 @@ Route::group(['prefix' => 'auth'], function () {
     Auth::routes();
 });
 //管理
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::view('/', 'admin.index');
 
     Route::any('/options', 'AdminController@options');
@@ -27,6 +27,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::any('/user-list', 'AdminController@getUserList');
 });
 //用户
-Route::group(['prefix' => 'user'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'user'], function () {
     Route::view('/', 'user.index');
 });
