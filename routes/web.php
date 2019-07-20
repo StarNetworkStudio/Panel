@@ -22,9 +22,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
     Route::any('/options', 'AdminController@options');
 
-    Route::view('/users', 'admin.users');
+    Route::view('/users-v1', 'admin.users-v1');
+    Route::view('/users-v2', 'admin.users-v2');
 
     Route::any('/user-list', 'AdminController@getUserList');
+    Route::any('/user-lists', 'AdminController@getUserLists');
 });
 //用户
 Route::group(['middleware' => 'auth', 'prefix' => 'user'], function () {
