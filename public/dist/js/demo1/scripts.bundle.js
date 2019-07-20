@@ -6471,6 +6471,9 @@ var KTWizard = function(elementId, options) {
 				var ajaxParams = {
 					dataType: 'json',
 					method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
 					data: {},
 					timeout: Plugin.getOption('data.source.read.timeout') || 30000,
 				};

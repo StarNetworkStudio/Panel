@@ -45,6 +45,18 @@ var KTDatatableJsonRemoteDemo = function () {
         }, {
           field: 'name',
           title: '用户名',
+        },{
+          field: 'permission',
+          title: '权限',
+          template: function(row) {
+            var status = {
+              "-1": {'title': '封禁'},
+              0: {'title': '普通用户'},
+              1: {'title': '管理员'},
+              2: {'title': '超级管理员'},
+            };
+            return status[row.permission].title
+          },
         }, {
           field: 'register_at',
           title: '注册时间',

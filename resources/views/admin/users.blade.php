@@ -98,12 +98,5 @@
   </div>
 @endsection
 @section('script')
-  <script type="text/javascript">
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-  </script>
   <script src="{{assets('js/admin/users.js')}}" type="text/javascript"></script>
 @endsection

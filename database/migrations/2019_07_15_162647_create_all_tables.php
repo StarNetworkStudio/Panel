@@ -15,11 +15,13 @@ class CreateAllTables extends Migration
     {
         Schema::create('member', function (Blueprint $table) {
             $table->bigIncrements('uid');
-            $table->string('name');
             $table->string('email')->unique();
+            $table->string('name');
             $table->string('avatar');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->ipAddress('ip');
+            $table->integer('permission')->default('0');
             $table->dateTime('register_at');
             $table->rememberToken();
         });
