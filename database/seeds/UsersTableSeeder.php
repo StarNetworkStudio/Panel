@@ -19,6 +19,8 @@ class UsersTableSeeder extends Seeder
         $user->name = 'admin';
         $user->email = 'stars_kim@163.com';
         $user->avatar = avatar('stars_kim@163.com');
+        $user->ip = '127.0.0.1';
+        $user->permission = User::SUPER_ADMIN;
         $user->save();
     }
 }

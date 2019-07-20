@@ -12,6 +12,14 @@ class User extends Authenticatable
 
     protected $table = 'member';
 
+    /**
+     * Permissions.
+     */
+    const BANNED = -1;
+    const NORMAL = 0;
+    const ADMIN = 1;
+    const SUPER_ADMIN = 2;
+
     public $primaryKey = 'uid';
     public $timestamps = false;
 
@@ -21,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'register_at',
+        'name', 'email', 'password', 'avatar', 'register_at', 'ip', 'permission',
     ];
 
     /**
