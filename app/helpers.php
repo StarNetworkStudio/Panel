@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 
 function route_class()
@@ -10,9 +11,9 @@ function route_class()
 
 if (! function_exists('avatar')) {
 
-    function avatar(User $user, $size=null)
+    function avatar($email, $size=null)
     {
-        $hash = md5(strtolower(trim($user->email)));
+        $hash = md5(strtolower(trim($email)));
 
         return gravatar($hash,$size);
     }
@@ -140,4 +141,17 @@ if (!function_exists('panel_menu')) {
         return $content;
     }
 
+}
+
+if (! function_exists('get_datetime_string')) {
+    /**
+     * Get date time string in "Y-m-d H:i:s" format.
+     *
+     * @param int $timestamp
+     * @return string
+     */
+    function get_datetime_string($timestamp = 0): string
+    {
+        return $timestamp == 0 ? Carbon::now()->toDateTimeString() : Carbon::createFromTimestamp($timestamp)->toDateTimeString();
+    }
 }
