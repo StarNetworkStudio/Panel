@@ -14,24 +14,53 @@ class AdminController extends Controller
 
     public function getUserList(Request $request)
     {
+        $isSingleUser = $request->has('uid');
+
+        if ($isSingleUser) {
+            $users = User::select(['uid', 'email', 'name', 'register_at'])
+                ->where('uid', intval($request->input('uid')))
+                ->get();
+        } else {
+            $page = $request->input('page', 1);
+            $pages = $request->input('pages', 1);
+            $perPage = $request->input('perPage', -1);
+            $search = $request->input('search', '');
+            $sortType = $request->input('sort.sort', 'asc');
+            $sortField = $request->input('sort.field', 'uid');
+
+            $users = User::select(['uid', 'email', 'name', 'register_at'])
+                ->where('uid', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('name', 'like', '%' . $search . '%')
+                ->orderBy($sortField, $sortType)
+                ->get();
+        }
+
         return [
-            [
-                'id'=>1,
-                'employee_id'=>"463978155-5",
-                'first_name'=>"Carroll",
-                'last_name'=>"Maharry",
-                'email'=>"cmaharry0@topsy.com",
-                'phone'=>"420-935-0970",
-                'gender'=>"Male",
-                'department'=>"Legal",
-                'address'=>"72460 Bunting Trail",
-                'hire_date'=>"3/18/2018",
-                'website'=>"https://gmpg.org",
-                'notes'=>"euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis",
-                'status'=>6,
-                'type'=>1,
-                'salary'=>"$339.37"
-            ]
+            'meta' => [
+                'page' => $page,
+                'pages' => $pages,
+                'perpage' => $perPage,
+                'sort' => $sortType,
+                'field' => $sortField,
+            ],
+            'data' => $users,
         ];
+    }
+
+    public function getUserLists(Request $request)
+    {
+        $isSingleUser = $request->has('uid');
+
+        if ($isSingleUser) {
+            $users = User::select(['uid', 'email', 'name', 'register_at'])
+                ->where('uid', intval($request->input('uid')))
+                ->get();
+        } else {
+            $users = User::select(['uid', 'email', 'name', 'register_at'])
+                ->get();
+        }
+
+        return $users;
     }
 }

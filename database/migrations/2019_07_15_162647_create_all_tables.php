@@ -17,10 +17,11 @@ class CreateAllTables extends Migration
             $table->bigIncrements('uid');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('avatar');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->dateTime('register_at');
             $table->rememberToken();
-            $table->timestamps();
         });
 
         Schema::create('password_resets', function (Blueprint $table) {

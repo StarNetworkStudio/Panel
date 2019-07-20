@@ -1,10 +1,10 @@
-@extends('admin.master', ['title' => '用户管理'])
+@extends('admin.master', ['title' => '用户管理v1'])
 @section('content')
   <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-          用户管理
+          用户管理v1
         </h3>
       </div>
       <div class="kt-portlet__head-toolbar">
@@ -105,13 +105,5 @@
   </div>
 @endsection
 @section('script')
-  <script>
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-
-  </script>
-  <script src="{{assets('js/demo1/pages/crud/keen-datatable/base/data-ajax.js')}}" type="text/javascript"></script>
+  <script src="{{assets('js/admin/users-v1.js')}}" type="text/javascript"></script>
 @endsection

@@ -2,7 +2,7 @@
      style="background-image: url({{assets('media/misc/head_bg_sm.jpg')}})">
   <div class="kt-user-card__wrapper">
     <div class="kt-user-card__pic">
-      <img alt="Pic" src="{{avatar($user,300)}}"/>
+      <img alt="Pic" src="{{$user->avatar}}"/>
     </div>
     <div class="kt-user-card__details">
       <div class="kt-user-card__name">{{$user->name}}</div>
@@ -36,8 +36,12 @@
     </a>
   </li>
   <li class="kt-nav__item kt-nav__item--custom kt-margin-t-15">
-    <a href="#" class="btn btn-label-brand btn-upper btn-sm btn-bold">
-      登出
+    <a href="#">
+      <form action="{{ route('logout') }}" method="POST">
+        {{ csrf_field() }}
+        <button class="btn btn-label-brand btn-upper btn-sm btn-bold">登出</button>
+      </form>
+    </a>
     </a>
   </li>
 </ul>
