@@ -1,10 +1,10 @@
-@extends('admin.master', ['title' => '用户管理v2'])
+@extends('admin.master', ['title' => '用户管理'])
 @section('content')
   <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-          用户管理v2
+          用户管理
         </h3>
       </div>
       <div class="kt-portlet__head-toolbar">
