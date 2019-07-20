@@ -68,6 +68,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'avatar' => avatar($data['email']),
             'password' => Hash::make($data['password']),
+            'ip'=> get_client_ip(),
+            'permission'=>User::NORMAL,
             'register_at' => get_datetime_string(),
         ]);
     }

@@ -22,6 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
         'avatar' => avatar($faker->unique()->safeEmail),
         'email_verified_at' => now(),
         'password' => '$2y$10$RM8oaL8moeRO7ZzXQgLh7OTZoSG3ZoV29Kh2EaJChGZK9maiVYPkq', // 12345678
+        'ip'=> '127.0.0.1',
         'register_at' => get_datetime_string(),
         'remember_token' => Str::random(10),
     ];

@@ -9,17 +9,17 @@ function route_class()
     return str_replace('.', '-', Route::currentRouteName());
 }
 
-if (! function_exists('avatar')) {
+if (!function_exists('avatar')) {
 
-    function avatar($email, $size=null)
+    function avatar($email, $size = null)
     {
         $hash = md5(strtolower(trim($email)));
 
-        return gravatar($hash,$size);
+        return gravatar($hash, $size);
     }
 }
 
-if (! function_exists('assets')) {
+if (!function_exists('assets')) {
 
     function assets($relativeUri)
     {
@@ -143,7 +143,7 @@ if (!function_exists('panel_menu')) {
 
 }
 
-if (! function_exists('get_datetime_string')) {
+if (!function_exists('get_datetime_string')) {
     /**
      * Get date time string in "Y-m-d H:i:s" format.
      *
@@ -153,5 +153,22 @@ if (! function_exists('get_datetime_string')) {
     function get_datetime_string($timestamp = 0): string
     {
         return $timestamp == 0 ? Carbon::now()->toDateTimeString() : Carbon::createFromTimestamp($timestamp)->toDateTimeString();
+    }
+}
+
+if (!function_exists('get_client_ip')) {
+    /**
+     * Return the client IP address.
+     *
+     * We define this function because Symfony's "Request::getClientIp()" method
+     * needs "setTrustedProxies()", which sucks when load balancer is enabled.
+     *
+     * @return string
+     */
+    function get_client_ip(): string
+    {
+        $ip = Arr::get($_SERVER, 'REMOTE_ADDR');
+
+        return $ip;
     }
 }

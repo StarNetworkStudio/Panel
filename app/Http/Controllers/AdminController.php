@@ -17,11 +17,11 @@ class AdminController extends Controller
         $isSingleUser = $request->has('uid');
 
         if ($isSingleUser) {
-            $users = User::select(['uid', 'email', 'name', 'register_at'])
+            $users = User::select(['uid', 'email', 'name', 'permission', 'register_at'])
                 ->where('uid', intval($request->input('uid')))
                 ->get();
         } else {
-            $users = User::select(['uid', 'email', 'name', 'register_at'])
+            $users = User::select(['uid', 'email', 'name', 'permission', 'register_at'])
                 ->get();
         }
 
