@@ -1,7 +1,7 @@
 "use strict";
 // Class definition
 
-var KTDatatableRemoteAjaxDemo = function () {
+var KTDatatableJsonRemoteDemo = function () {
   // Private functions
 
   // basic demo
@@ -11,29 +11,14 @@ var KTDatatableRemoteAjaxDemo = function () {
       // datasource definition
       data: {
         type: 'remote',
-        source: {
-          read: {
-            url: 'user-list',
-            map: function (raw) {
-              // sample data mapping
-              var dataSet = raw;
-              if (typeof raw.data !== 'undefined') {
-                dataSet = raw.data;
-              }
-              return dataSet;
-            },
-          },
-        },
+        source: 'user-list',
         pageSize: 10,
-        serverPaging: true,
-        serverFiltering: true,
-        serverSorting: true,
       },
 
       // layout definition
       layout: {
-        scroll: false,
-        footer: false,
+        scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+        footer: false // display/hide footer
       },
 
       // column sorting
@@ -42,7 +27,7 @@ var KTDatatableRemoteAjaxDemo = function () {
       pagination: true,
 
       search: {
-        input: $('#generalSearch'),
+        input: $('#generalSearch')
       },
 
       // columns definition
@@ -97,6 +82,14 @@ var KTDatatableRemoteAjaxDemo = function () {
 
     });
 
+    $('#kt_form_status').on('change', function() {
+      datatable.search($(this).val().toLowerCase(), 'status');
+    });
+
+    $('#kt_form_type').on('change', function() {
+      datatable.search($(this).val().toLowerCase(), 'type');
+    });
+
     $('#kt_form_status,#kt_form_type').selectpicker();
 
   };
@@ -105,10 +98,10 @@ var KTDatatableRemoteAjaxDemo = function () {
     // public functions
     init: function () {
       users();
-    },
+    }
   };
 }();
 
 jQuery(document).ready(function () {
-  KTDatatableRemoteAjaxDemo.init();
+  KTDatatableJsonRemoteDemo.init();
 });
