@@ -11,6 +11,7 @@
   </div>
 </div>
 <ul class="kt-nav kt-margin-b-10">
+  @admin($user)
   <li class="kt-nav__item">
     <a href="?page=custom/user/profile-v1" class="kt-nav__link">
       <span class="kt-nav__link-icon"><i class="flaticon2-calendar-3"></i></span>
@@ -35,6 +36,7 @@
       <span class="kt-nav__link-text">Settings</span>
     </a>
   </li>
+  @endadmin
   <li class="kt-nav__item kt-nav__item--custom kt-margin-t-15">
     <a href="#">
       <form action="{{ route('logout') }}" method="POST">

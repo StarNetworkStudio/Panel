@@ -17,7 +17,7 @@ Route::group(['prefix' => 'auth'], function () {
     Auth::routes();
 });
 //管理
-Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
     Route::view('/', 'admin.index');
 
     Route::any('/options', 'AdminController@options');
