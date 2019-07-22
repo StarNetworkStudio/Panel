@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -32,6 +31,15 @@ class CreateAllTables extends Migration
             $table->timestamp('created_at')->nullable();
         });
 
+        Schema::create('invitation_code', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('code',40);
+            $table->integer('max')->default('1');
+            $table->string('users',20)->nullable();
+            $table->dateTime('expiration')->nullable();
+            $table->string('status',20)->nullable();
+        });
+
         Schema::create('system', function (Blueprint $table) {
             $table->string('k')->primary();
             $table->string('v',1500)->nullable();
@@ -47,6 +55,7 @@ class CreateAllTables extends Migration
     {
         Schema::drop('member');
         Schema::drop('password_resets');
+        Schema::drop('invitation_code');
         Schema::drop('system');
     }
 }
