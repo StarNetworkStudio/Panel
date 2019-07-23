@@ -5,7 +5,7 @@ branches:
 notifications:
   webhooks: https://oapi.dingtalk.com/robot/send?access_token=2df54d9b00fef949f3c58d93b9eccbad08a741db47706ebdfbcdfc92cfb33afb
 install: composer install --no-interaction --prefer-dist
-script: echo '测试'
+script: phpunit
 matrix:
   include:
   - php: 7.3
@@ -13,15 +13,12 @@ matrix:
     language: node_js
     install: yarn
     script: echo '测试'
-
 before_install:
 - openssl aes-256-cbc -K $encrypted_72a15151d2bc_key -iv $encrypted_72a15151d2bc_iv
   -in bt.enc -out ~\/.ssh/bt -d
 - mv ~/.ssh/bt ~/.ssh/id_rsa
 - chmod 600 ~/.ssh/id_rsa
-
 addons:
   ssh_known_hosts: 34.92.170.56
-
 after_success:
-  - ssh root@34.92.170.56 ./travis-shell-script-dev.sh
+- ssh root@34.92.170.56 ./travis-shell-script-dev.sh
