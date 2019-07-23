@@ -38,12 +38,8 @@
   </li>
   @endadmin
   <li class="kt-nav__item kt-nav__item--custom kt-margin-t-15">
-    <a href="#">
-      <form action="{{ route('logout') }}" method="POST">
-        {{ csrf_field() }}
-        <button class="btn btn-label-brand btn-upper btn-sm btn-bold">登出</button>
-      </form>
-    </a>
+    <a href="{{ route('logout') }}" class="btn btn-label-brand btn-upper btn-sm btn-bold">
+      登出
     </a>
   </li>
 </ul>

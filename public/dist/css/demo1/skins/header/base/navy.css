@@ -48,7 +48,7 @@
     .kt-header .kt-header__topbar .kt-header__topbar-item:hover.kt-header__topbar--quick-panel-toggler .kt-header__topbar-icon i, .kt-header .kt-header__topbar .kt-header__topbar-item.show.kt-header__topbar--quick-panel-toggler .kt-header__topbar-icon i {
       color: #ffffff; }
   .kt-header .kt-header__topbar .kt-header__topbar-item.kt-header__topbar-item--search .kt-input-icon .kt-input-icon__icon i {
-    color: #a1a8c3; }
+    color: #74788d; }
 
 @media (max-width: 1024px) {
   .kt-header__topbar {

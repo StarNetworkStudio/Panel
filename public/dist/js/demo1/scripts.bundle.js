@@ -82,8 +82,9 @@ var KTApp = function() {
         $('[data-scroll="true"]').each(function() {
             var el = $(this);
             KTUtil.scrollInit(this, {
-                disableForMobile: true,
+                mobileNativeScroll: true,
                 handleWindowResize: true,
+                rememberPosition: (el.data('remember-position') == 'true' ? true : false),
                 height: function() {
                     if (KTUtil.isInResponsiveRange('tablet-and-mobile') && el.data('mobile-height')) {
                         return el.data('mobile-height');
@@ -106,27 +107,25 @@ var KTApp = function() {
         var sticky = new Sticky('[data-sticky="true"]');
     }
 
-    var initAbsoluteDropdown = function(dropdown) {
+    var initAbsoluteDropdown = function(context) {
         var dropdownMenu;
 
-        if (!dropdown) {
+        if (!context) {
             return;
         }
 
-        dropdown.on('show.bs.dropdown', function(e) {
-            dropdownMenu = $(e.target).find('.dropdown-menu');
-            $('body').append(dropdownMenu.detach());
-            dropdownMenu.css('display', 'block');
-            dropdownMenu.position({
-                'my': 'right top',
-                'at': 'right bottom',
-                'of': $(e.relatedTarget)
-            });
-        });
-
-        dropdown.on('hide.bs.dropdown', function(e) {
-            $(e.target).append(dropdownMenu.detach());
-            dropdownMenu.hide();
+        $('body').on('show.bs.dropdown', context, function(e) {
+        	dropdownMenu = $(e.target).find('.dropdown-menu');
+        	$('body').append(dropdownMenu.detach());
+        	dropdownMenu.css('display', 'block');
+        	dropdownMenu.position({
+        		'my': 'right top',
+        		'at': 'right bottom',
+        		'of': $(e.relatedTarget),
+        	});
+        }).on('hide.bs.dropdown', context, function(e) {
+        	$(e.target).append(dropdownMenu.detach());
+        	dropdownMenu.hide();
         });
     }
 
@@ -207,15 +206,15 @@ var KTApp = function() {
             initSticky();
         },
 
-        initAbsoluteDropdown: function(dropdown) {
-            initAbsoluteDropdown(dropdown);
+        initAbsoluteDropdown: function(context) {
+            initAbsoluteDropdown(context);
         },
 
         block: function(target, options) {
             var el = $(target);
 
             options = $.extend(true, {
-                opacity: 0.03,
+                opacity: 0.05,
                 overlayColor: '#000000',
                 type: '',
                 size: '',
@@ -328,6 +327,11 @@ var KTApp = function() {
         }
     };
 }();
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTApp;
+}
 
 // Initialize KTApp class on document ready
 $(document).ready(function() {
@@ -555,59 +559,59 @@ var KTLib = function() {
         }
     };
 }();
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTLib;
+}
 "use strict";
 /**
  * @class KTUtil  base utilize class that privides helper functions
  */
-// Polyfill
-// matches polyfill
-this.Element && function(ElementPrototype) {
-    ElementPrototype.matches = ElementPrototype.matches ||
-        ElementPrototype.matchesSelector ||
-        ElementPrototype.webkitMatchesSelector ||
-        ElementPrototype.msMatchesSelector ||
-        function(selector) {
-            var node = this,
-                nodes = (node.parentNode || node.document).querySelectorAll(selector),
-                i = -1;
-            while (nodes[++i] && nodes[i] != node);
-            return !!nodes[i];
-        }
-}(Element.prototype);
 
-// closest polyfill
-this.Element && function(ElementPrototype) {
-    ElementPrototype.closest = ElementPrototype.closest ||
-        function(selector) {
-            var el = this;
-            while (el.matches && !el.matches(selector)) el = el.parentNode;
-            return el.matches ? el : null;
-        }
-}(Element.prototype);
-
-// remove polyfill
-if (!('remove' in Element.prototype)) {
-    Element.prototype.remove = function() {
-        if (this.parentNode) {
-            this.parentNode.removeChild(this);
-        }
-    };
+// Polyfills
+/**
+ * Element.matches() polyfill (simple version)
+ * https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+ */
+if (!Element.prototype.matches) {
+	Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
 
-// matches polyfill
-this.Element && function(ElementPrototype) {
-    ElementPrototype.matches = ElementPrototype.matches ||
-        ElementPrototype.matchesSelector ||
-        ElementPrototype.webkitMatchesSelector ||
-        ElementPrototype.msMatchesSelector ||
-        function(selector) {
-            var node = this,
-                nodes = (node.parentNode || node.document).querySelectorAll(selector),
-                i = -1;
-            while (nodes[++i] && nodes[i] != node);
-            return !!nodes[i];
-        }
-}(Element.prototype);
+/**
+ * Element.closest() polyfill
+ * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+ */
+if (!Element.prototype.closest) {
+	if (!Element.prototype.matches) {
+		Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+	}
+	Element.prototype.closest = function (s) {
+		var el = this;
+		var ancestor = this;
+		if (!document.documentElement.contains(el)) return null;
+		do {
+			if (ancestor.matches(s)) return ancestor;
+			ancestor = ancestor.parentElement;
+		} while (ancestor !== null);
+		return null;
+	};
+}
+
+/**
+ * ChildNode.remove() polyfill
+ * https://gomakethings.com/removing-an-element-from-the-dom-the-es6-way/
+ * @author Chris Ferdinandi
+ * @license MIT
+ */
+(function (elem) {
+	for (var i = 0; i < elem.length; i++) {
+		if (!window[elem[i]] || 'remove' in window[elem[i]].prototype) continue;
+		window[elem[i]].prototype.remove = function () {
+			this.parentNode.removeChild(this);
+		};
+	}
+})(['Element', 'CharacterData', 'DocumentType']);
 
 //
 // requestAnimationFrame polyfill by Erik Möller.
@@ -675,7 +679,6 @@ window.KTUtilElementDataStoreID = 0;
 window.KTUtilDelegatedEventHandlers = {};
 
 var KTUtil = function() {
-
     var resizeHandlers = [];
 
     /** @type {object} breakpoints The device width breakpoints **/
@@ -939,6 +942,8 @@ var KTUtil = function() {
          * @returns {boolean}  
          */
         hasFixedPositionedParent: function(el) {
+            var position;
+            
             while (el && el !== document) {
                 position = KTUtil.css(el, 'position');
 
@@ -1979,6 +1984,8 @@ var KTUtil = function() {
             return (KTUtil.attr(KTUtil.get('html'), 'direction') == 'rtl');
         },
 
+        // 
+
         // Scroller
         scrollInit: function(element, options) {
             if(!element) return;
@@ -1994,7 +2001,7 @@ var KTUtil = function() {
                 }
 
                 // Destroy scroll on table and mobile modes
-                if (options.disableForMobile && KTUtil.isInResponsiveRange('tablet-and-mobile')) {
+                if ((options.mobileNativeScroll || options.disableForMobile) && KTUtil.isInResponsiveRange('tablet-and-mobile')) {
                     if (ps = KTUtil.data(element).get('ps')) {
                         if (options.resetHeightOnDestroy) {
                             KTUtil.css(element, 'height', 'auto');
@@ -2019,9 +2026,14 @@ var KTUtil = function() {
                     KTUtil.css(element, 'height', height + 'px');
                 }
 
+                if (options.desktopNativeScroll) {
+                    KTUtil.css(element, 'overflow', 'auto');
+                    return;
+                }
+                
+                // Init scroll
                 KTUtil.css(element, 'overflow', 'hidden');
 
-                // Init scroll
                 if (ps = KTUtil.data(element).get('ps')) {
                     ps.update();
                 } else {
@@ -2029,13 +2041,30 @@ var KTUtil = function() {
                     ps = new PerfectScrollbar(element, {
                         wheelSpeed: 0.5,
                         swipeEasing: true,
-                        wheelPropagation: false,
+                        wheelPropagation: (options.windowScroll === false ? false : true),
                         minScrollbarLength: 40,
                         maxScrollbarLength: 300, 
                         suppressScrollX: KTUtil.attr(element, 'data-scroll-x') != 'true' ? true : false
                     });
 
                     KTUtil.data(element).set('ps', ps);
+                }
+
+                // Remember scroll position in cookie
+                var uid = KTUtil.attr(element, 'id');
+
+                if (options.rememberPosition === true && Cookies && uid) {
+                    if (Cookies.get(uid)) {
+                        var pos = parseInt(Cookies.get(uid));
+
+                        if (pos > 0) {
+                            element.scrollTop = pos;
+                        }
+                    } 
+
+                    element.addEventListener('ps-scroll-y', function() {
+                        Cookies.set(uid, element.scrollTop);
+                    });                                      
                 }
             }
 
@@ -2085,6 +2114,11 @@ var KTUtil = function() {
         } 
     }
 }();
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTUtil;
+}
 
 // Initialize KTUtil class on document ready
 KTUtil.ready(function() {
@@ -2194,10 +2228,10 @@ var KTAvatar = function(elementId, options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;
-                            event.handler.call(this, the);
+                            return event.handler.call(this, the);
                         }
                     } else {
-                        event.handler.call(this, the);
+                        return event.handler.call(this, the);
                     }
                 }
             }
@@ -2246,6 +2280,11 @@ var KTAvatar = function(elementId, options) {
 
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTAvatar;
+}
 "use strict";
 
 // plugin setup
@@ -2346,10 +2385,10 @@ var KTDialog = function(options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;                            
-                            event.handler.call(this, the);
+                            return event.handler.call(this, the);
                         }
                     } else {
-                        event.handler.call(this, the);
+                        return event.handler.call(this, the);
                     }
                 }
             }
@@ -2428,6 +2467,11 @@ var KTDialog = function(options) {
 
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTDialog;
+}
 "use strict";
 var KTHeader = function(elementId, options) {
     // Main object
@@ -2575,10 +2619,10 @@ var KTHeader = function(elementId, options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;
-                            event.handler.call(this, the, args);
+                            return event.handler.call(this, the, args);
                         }
                     } else {
-                        event.handler.call(this, the, args);
+                        return event.handler.call(this, the, args);
                     }
                 }
             }
@@ -2626,6 +2670,11 @@ var KTHeader = function(elementId, options) {
     // Return plugin instance
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTHeader;
+}
 "use strict";
 var KTMenu = function(elementId, options) {
     // Main object
@@ -2642,6 +2691,11 @@ var KTMenu = function(elementId, options) {
 
     // Default options
     var defaultOptions = {       
+        // scrollable area with Perfect Scroll
+        scroll: {
+            rememberPosition: false
+        },
+        
         // accordion submenu mode
         accordion: {
             slideSpeed: 200, // accordion toggle slide speed in milliseconds
@@ -2785,7 +2839,7 @@ var KTMenu = function(elementId, options) {
         scrollInit: function() {
             if ( the.options.scroll && the.options.scroll.height ) {
                 KTUtil.scrollDestroy(element);
-                KTUtil.scrollInit(element, {disableForMobile: true, resetHeightOnDestroy: true, handleWindowResize: true, height: the.options.scroll.height});
+                KTUtil.scrollInit(element, {mobileNativeScroll: true, windowScroll: false, resetHeightOnDestroy: true, handleWindowResize: true, height: the.options.scroll.height, rememberPosition: the.options.scroll.rememberPosition});
             } else {
                 KTUtil.scrollDestroy(element);
             }           
@@ -2972,6 +3026,12 @@ var KTMenu = function(elementId, options) {
          */
         handleLinkClick: function(e) {
             var submenu = this.closest('.kt-menu__item.kt-menu__item--submenu'); //
+
+            var result = Plugin.eventTrigger('linkClick', this, e);
+            if (result === false) {
+                return;
+            } 
+
             if ( submenu && Plugin.getSubmenuMode(submenu) === 'dropdown' ) {
                 Plugin.hideSubmenuDropdowns();
             }
@@ -3049,7 +3109,7 @@ var KTMenu = function(elementId, options) {
                         Plugin.scrollToItem(item);
                         Plugin.scrollUpdate();
                         
-                        Plugin.eventTrigger('submenuToggle', submenu);
+                        Plugin.eventTrigger('submenuToggle', submenu, e);
                     });
                 
                     KTUtil.addClass(li, 'kt-menu__item--open');
@@ -3057,7 +3117,7 @@ var KTMenu = function(elementId, options) {
                 } else {
                     KTUtil.slideUp(submenu, speed, function() {
                         Plugin.scrollToItem(item);
-                        Plugin.eventTrigger('submenuToggle', submenu);
+                        Plugin.eventTrigger('submenuToggle', submenu, e);
                     });
 
                     KTUtil.removeClass(li, 'kt-menu__item--open');
@@ -3220,7 +3280,6 @@ var KTMenu = function(elementId, options) {
 
             var parents = KTUtil.parents(item, '.kt-menu__item--submenu') || [];
             for (var i = 0, len = parents.length; i < len; i++) {
-                console.log(parents[i]);
                 KTUtil.addClass(KTUtil.get(parents[i]), 'kt-menu__item--open');
             }
 
@@ -3269,17 +3328,17 @@ var KTMenu = function(elementId, options) {
         /**
          * Trigger events
          */
-        eventTrigger: function(name, args) {
+        eventTrigger: function(name, target, e) {
             for (var i = 0; i < the.events.length; i++ ) {
                 var event = the.events[i];
                 if ( event.name == name ) {
                     if ( event.one == true ) {
                         if ( event.fired == false ) {
                             the.events[i].fired = true;
-                            event.handler.call(this, the, args);
+                            return event.handler.call(this, target, e);
                         }
                     } else {
-                        event.handler.call(this, the, args);
+                        return event.handler.call(this, target, e);
                     }
                 }
             }
@@ -3438,6 +3497,11 @@ var KTMenu = function(elementId, options) {
     return the;
 };
 
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTMenu;
+}
+
 // Plugin global lazy initialization
 document.addEventListener("click", function (e) {
     var body = KTUtil.get('body');
@@ -3524,13 +3588,23 @@ var KTOffcanvas = function(elementId, options) {
                         e.preventDefault();
                         Plugin.toggle();
                     }); 
-                } else if (the.options.toggleBy && the.options.toggleBy[0] && the.options.toggleBy[0].target) {
-                    for (var i in the.options.toggleBy) { 
-                        KTUtil.addEvent( the.options.toggleBy[i].target, 'click', function(e) {
-                            e.preventDefault();
-                            Plugin.toggle();
-                        }); 
+                } else if (the.options.toggleBy && the.options.toggleBy[0]) {
+                    if (the.options.toggleBy[0].target) {
+                        for (var i in the.options.toggleBy) { 
+                            KTUtil.addEvent( the.options.toggleBy[i].target, 'click', function(e) {
+                                e.preventDefault();
+                                Plugin.toggle();
+                            }); 
+                        }
+                    } else {
+                        for (var i in the.options.toggleBy) { 
+                            KTUtil.addEvent( the.options.toggleBy[i], 'click', function(e) {
+                                e.preventDefault();
+                                Plugin.toggle();
+                            }); 
+                        }
                     }
+                    
                 } else if (the.options.toggleBy && the.options.toggleBy.target) {
                     KTUtil.addEvent( the.options.toggleBy.target, 'click', function(e) {
                         e.preventDefault();
@@ -3659,10 +3733,10 @@ var KTOffcanvas = function(elementId, options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;
-                            event.handler.call(this, the, args);
+                            return event.handler.call(this, the, args);
                         }
                     } else {
-                        event.handler.call(this, the, args);
+                        return event.handler.call(this, the, args);
                     }
                 }
             }
@@ -3718,6 +3792,11 @@ var KTOffcanvas = function(elementId, options) {
     // Return plugin instance
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTOffcanvas;
+}
 "use strict";
 // plugin setup
 var KTPortlet = function(elementId, options) {
@@ -3893,21 +3972,21 @@ var KTPortlet = function(elementId, options) {
 
             if (KTUtil.hasClass(body, 'kt-portlet--sticky')) {
                 if (the.options.sticky.position.top instanceof Function) {
-                    top = parseInt(the.options.sticky.position.top.call());
+                    top = parseInt(the.options.sticky.position.top.call(this, the));
                 } else {
                     top = parseInt(the.options.sticky.position.top);
                 }
 
                 var left;
                 if (the.options.sticky.position.left instanceof Function) {
-                    left = parseInt(the.options.sticky.position.left.call());
+                    left = parseInt(the.options.sticky.position.left.call(this, the));
                 } else {
                     left = parseInt(the.options.sticky.position.left);
                 }
 
                 var right;
                 if (the.options.sticky.position.right instanceof Function) {
-                    right = parseInt(the.options.sticky.position.right.call());
+                    right = parseInt(the.options.sticky.position.right.call(this, the));
                 } else {
                     right = parseInt(the.options.sticky.position.right);
                 }
@@ -4200,10 +4279,10 @@ var KTPortlet = function(elementId, options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;
-                            event.handler.call(this, the);
+                            return event.handler.call(this, the);
                         }
                     } else {
-                        event.handler.call(this, the);
+                        return event.handler.call(this, the);
                     }
                 }
             }
@@ -4364,6 +4443,11 @@ var KTPortlet = function(elementId, options) {
 
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTPortlet;
+}
 "use strict";
 var KTScrolltop = function(elementId, options) {
     // Main object
@@ -4477,10 +4561,10 @@ var KTScrolltop = function(elementId, options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;
-                            event.handler.call(this, the, args);
+                            return event.handler.call(this, the, args);
                         }
                     } else {
-                        event.handler.call(this, the, args);
+                       return event.handler.call(this, the, args);
                     }
                 }
             }
@@ -4536,6 +4620,11 @@ var KTScrolltop = function(elementId, options) {
     // Return plugin instance
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTScrolltop;
+}
 "use strict";
 
 // plugin setup
@@ -4679,10 +4768,10 @@ var KTToggle = function(elementId, options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;                            
-                            event.handler.call(this, the);
+                            return event.handler.call(this, the);
                         }
                     } else {
-                        event.handler.call(this, the);
+                        return event.handler.call(this, the);
                     }
                 }
             }
@@ -4761,6 +4850,11 @@ var KTToggle = function(elementId, options) {
 
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTToggle;
+}
 // plugin setup
 var KTWizard = function(elementId, options) {
     // Main object
@@ -4777,8 +4871,7 @@ var KTWizard = function(elementId, options) {
 
     // Default options
     var defaultOptions = {
-        startStep: 1,
-        manualStepForward: false
+        startStep: 1
     };
 
     ////////////////////////////
@@ -4847,31 +4940,31 @@ var KTWizard = function(elementId, options) {
             // Next button event handler
             KTUtil.addEvent(the.btnNext, 'click', function(e) {
                 e.preventDefault();
-                Plugin.goNext();
+                Plugin.goTo(Plugin.getNextStep(), true);
             });
 
             // Prev button event handler
             KTUtil.addEvent(the.btnPrev, 'click', function(e) {
                 e.preventDefault();
-                Plugin.goPrev();
+                Plugin.goTo(Plugin.getPrevStep(), true);
             });
 
             // First button event handler
             KTUtil.addEvent(the.btnFirst, 'click', function(e) {
                 e.preventDefault();
-                Plugin.goFirst();
+                Plugin.goTo(Plugin.getFirstStep(), true);
             });
 
             // Last button event handler
             KTUtil.addEvent(the.btnLast, 'click', function(e) {
                 e.preventDefault();
-                Plugin.goLast();
+                Plugin.goTo(Plugin.getLastStep(), true);
             });
 
             KTUtil.on(element, 'a[data-ktwizard-type="step"]', 'click', function() {
                 var index = KTUtil.index(this) + 1;
                 if (index !== the.currentStep) {
-                    Plugin.goTo(index);
+                    Plugin.goTo(index, true);
                 }                
             });
         },
@@ -4879,7 +4972,7 @@ var KTWizard = function(elementId, options) {
         /**
          * Handles wizard click wizard
          */
-        goTo: function(number) {
+        goTo: function(number, eventHandle) {
             // Skip if this step is already shown
             if (number === the.currentStep || number > the.totalSteps || number < 0) {
                 return;
@@ -4895,10 +4988,12 @@ var KTWizard = function(elementId, options) {
             // Before next and prev events
             var callback;
 
-            if (number > the.currentStep) {
-                callback = Plugin.eventTrigger('beforeNext');
-            } else {
-                callback = Plugin.eventTrigger('beforePrev');
+            if (eventHandle === true) {
+                if (number > the.currentStep) {
+                    callback = Plugin.eventTrigger('beforeNext');
+                } else {
+                    callback = Plugin.eventTrigger('beforePrev');
+                }
             }
             
             // Skip if stopped
@@ -4910,7 +5005,9 @@ var KTWizard = function(elementId, options) {
             // Continue if no exit
             if (callback !== false) {
                 // Before change
-                Plugin.eventTrigger('beforeChange');
+                if (eventHandle === true) {
+                    Plugin.eventTrigger('beforeChange');
+                }
 
                 // Set current step 
                 the.currentStep = number;
@@ -4918,14 +5015,18 @@ var KTWizard = function(elementId, options) {
                 Plugin.updateUI();
 
                 // Trigger change event
-                Plugin.eventTrigger('change');
+                if (eventHandle === true) {
+                    Plugin.eventTrigger('change');
+                }
             }
 
             // After next and prev events
-            if (number > the.startStep) {
-                Plugin.eventTrigger('afterNext');
-            } else {
-                Plugin.eventTrigger('afterPrev');
+            if (eventHandle === true) {
+                if (number > the.startStep) {
+                    Plugin.eventTrigger('afterNext');
+                } else {
+                    Plugin.eventTrigger('afterPrev');
+                }
             }
 
             return the;
@@ -4964,34 +5065,6 @@ var KTWizard = function(elementId, options) {
          */
         isBetweenStep: function() {
             return Plugin.isLastStep() === false && Plugin.isFirstStep() === false;
-        },
-
-        /**
-         * Go to the next step
-         */
-        goNext: function() {
-            return Plugin.goTo(Plugin.getNextStep());
-        },
-
-        /**
-         * Go to the prev step
-         */
-        goPrev: function() {
-            return Plugin.goTo(Plugin.getPrevStep());
-        },
-
-        /**
-         * Go to the last step
-         */
-        goLast: function() {
-            return Plugin.goTo(the.totalSteps);
-        },
-
-        /**
-         * Go to the first step
-         */
-        goFirst: function() {
-            return Plugin.goTo(1);
         },
 
         /**
@@ -5078,7 +5151,7 @@ var KTWizard = function(elementId, options) {
         /**
          * Trigger events
          */
-        eventTrigger: function(name) {
+        eventTrigger: function(name, nested) {
             //KTUtil.triggerCustomEvent(name);
             for (var i = 0; i < the.events.length; i++) {
                 var event = the.events[i];
@@ -5086,10 +5159,10 @@ var KTWizard = function(elementId, options) {
                     if (event.one == true) {
                         if (event.fired == false) {
                             the.events[i].fired = true;
-                            event.handler.call(this, the);
+                            return event.handler.call(this, the);
                         }
                     } else {
-                        event.handler.call(this, the);
+                        return event.handler.call(this, the);
                     }
                 }
             }
@@ -5122,22 +5195,36 @@ var KTWizard = function(elementId, options) {
     /**
      * Go to the next step 
      */
-    the.goNext = function() {
-        return Plugin.goNext();
+    the.goNext = function(eventHandle) {
+        return Plugin.goTo(Plugin.getNextStep(), eventHandle);
     };
 
     /**
      * Go to the prev step 
      */
-    the.goPrev = function() {
-        return Plugin.goPrev();
+    the.goPrev = function(eventHandle) {
+        return Plugin.goTo(Plugin.getPrevStep(),eventHandle);
     };
 
     /**
      * Go to the last step 
      */
-    the.goLast = function() {
-        return Plugin.goLast();
+    the.goLast = function(eventHandle) {
+        return Plugin.goTo(Plugin.getLastStep(), eventHandle);
+    };
+
+    /**
+     * Go to the first step 
+     */
+    the.goFirst = function(eventHandle) {
+        return Plugin.goTo(Plugin.getFirstStep(), eventHandle);
+    };
+
+    /**
+     * Go to a step
+     */
+    the.goTo = function(number, eventHandle) {
+        return Plugin.goTo(number, eventHandle);
     };
 
     /**
@@ -5152,20 +5239,6 @@ var KTWizard = function(elementId, options) {
      */
     the.start = function() {
         return Plugin.start();
-    };
-
-    /**
-     * Go to the first step 
-     */
-    the.goFirst = function() {
-        return Plugin.goFirst();
-    };
-
-    /**
-     * Go to a step
-     */
-    the.goTo = function(number) {
-        return Plugin.goTo(number);
     };
 
     /**
@@ -5208,6 +5281,11 @@ var KTWizard = function(elementId, options) {
 
     return the;
 };
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTWizard;
+}
 'use strict';
 (function($) {
 
@@ -5419,8 +5497,6 @@ var KTWizard = function(elementId, options) {
 					Plugin.lockTable.call();
 				}
 
-				Plugin.columnHide.call();
-
 				Plugin.resetScroll();
 
 				// check if not is a locked column
@@ -5433,6 +5509,8 @@ var KTWizard = function(elementId, options) {
 					// reset row
 					$(datatable.table).find('.' + pfx + 'datatable__row').css('height', '');
 				}
+
+				Plugin.columnHide.call();
 
 				Plugin.rowEvenOdd.call();
 
@@ -6471,9 +6549,6 @@ var KTWizard = function(elementId, options) {
 				var ajaxParams = {
 					dataType: 'json',
 					method: 'POST',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
 					data: {},
 					timeout: Plugin.getOption('data.source.read.timeout') || 30000,
 				};
@@ -6905,8 +6980,7 @@ var KTWizard = function(elementId, options) {
 						// get visible page
 						var pagerNumber = $(pager).find('.' + pfx + 'datatable__pager-link-number');
 						// get page before of first visible
-						var morePrevPage = Math.max($(pagerNumber).first().data('page') - 1,
-							1);
+						var morePrevPage = Math.max($(pagerNumber).first().data('page') - 1, 1);
 						$(pagerMorePrev).each(function(i, prev) {
 							$(prev).attr('data-page', morePrevPage);
 						});
@@ -6973,21 +7047,30 @@ var KTWizard = function(elementId, options) {
 				var screen = util.getViewPort().width;
 				// foreach columns setting
 				$.each(options.columns, function(i, column) {
-					if (typeof column.responsive !== 'undefined') {
+					if (typeof column.responsive !== 'undefined' || typeof column.visible !== 'undefined') {
 						var field = column.field;
 						var tds = $.grep($(datatable.table).find('.' + pfx + 'datatable__cell'), function(n, i) {
 							return field === $(n).data('field');
 						});
-						if (util.getBreakpoint(column.responsive.hidden) >= screen) {
-							$(tds).hide();
-						} else {
-							$(tds).show();
-						}
-						if (util.getBreakpoint(column.responsive.visible) <= screen) {
-							$(tds).show();
-						} else {
-							$(tds).hide();
-						}
+
+						setTimeout(function () {
+							// hide by force
+							if (Plugin.getObject('visible', column) === false) {
+								$(tds).hide();
+							} else {
+								// show/hide by responsive breakpoint
+								if (util.getBreakpoint(Plugin.getObject('responsive.hidden', column)) >= screen) {
+									$(tds).hide();
+								} else {
+									$(tds).show();
+								}
+								if (util.getBreakpoint(Plugin.getObject('responsive.visible', column)) <= screen) {
+									$(tds).show();
+								} else {
+									$(tds).hide();
+								}
+							}
+						});
 					}
 				});
 			},
@@ -8311,46 +8394,6 @@ var KTWizard = function(elementId, options) {
 				return datatable.originalDataSet;
 			},
 
-			/**
-			 * @deprecated in v5.0.6
-			 * Hide column by column's field name
-			 * @param fieldName
-			 */
-			hideColumn: function(fieldName) {
-				// add hide option for this column
-				$.map(options.columns, function(column) {
-					if (fieldName === column.field) {
-						column.responsive = {hidden: 'xl'};
-					}
-					return column;
-				});
-				// hide current displayed column
-				var tds = $.grep($(datatable.table).find('.' + pfx + 'datatable__cell'), function(n, i) {
-					return fieldName === $(n).data('field');
-				});
-				$(tds).hide();
-			},
-
-			/**
-			 * @deprecated in v5.0.6
-			 * Show column by column's field name
-			 * @param fieldName
-			 */
-			showColumn: function(fieldName) {
-				// add hide option for this column
-				$.map(options.columns, function(column) {
-					if (fieldName === column.field) {
-						delete column.responsive;
-					}
-					return column;
-				});
-				// hide current displayed column
-				var tds = $.grep($(datatable.table).find('.' + pfx + 'datatable__cell'), function(n, i) {
-					return fieldName === $(n).data('field');
-				});
-				$(tds).show();
-			},
-
 			nodeTr: [],
 			nodeTd: [],
 			nodeCols: [],
@@ -8466,15 +8509,16 @@ var KTWizard = function(elementId, options) {
 
 					if (bool) {
 						if (Plugin.recentNode === Plugin.nodeCols) {
-							delete options.columns[index].responsive;
+							delete options.columns[index].visible;
 						}
 						$(Plugin.recentNode).show();
 					} else {
 						if (Plugin.recentNode === Plugin.nodeCols) {
-							Plugin.setOption('columns.' + index + '.responsive', {hidden: 'xl'});
+							Plugin.setOption('columns.' + index + '.visible', false);
 						}
 						$(Plugin.recentNode).hide();
 					}
+					Plugin.columnHide();
 					Plugin.redraw();
 				}
 			},
@@ -9762,7 +9806,8 @@ var KTLayout = function() {
         var scroll;
         if (KTUtil.attr(menu, 'data-ktmenu-scroll') === '1') {
             scroll = {
-                height: function() {
+                rememberPosition: true, // remember position on page reload
+                height: function() {  // calculate available scrollable area height
                     var height;
                     
                     if (KTUtil.isInResponsiveRange('desktop')) {
@@ -9816,12 +9861,12 @@ var KTLayout = function() {
         asideToggler.on('toggle', function(toggle) {  
             KTUtil.addClass(body, 'kt-aside--minimizing');
 
-            if (KTUtil.get('kt_page_portlet')) {
-                pageStickyPortlet.updateSticky();      
-            } 
-
             KTUtil.transitionEnd(body, function() {
                 KTUtil.removeClass(body, 'kt-aside--minimizing');
+
+                if (KTUtil.get('kt_page_portlet')) {
+                    pageStickyPortlet.updateSticky();      
+                }
             });
 
             headerMenu.pauseDropdownHover(800);
@@ -9854,9 +9899,11 @@ var KTLayout = function() {
         });
 
         asideSecondaryToggler.on('toggle', function(toggle) {
-            if (KTUtil.get('kt_page_portlet')) {
-                pageStickyPortlet.updateSticky();      
-            } 
+            KTUtil.transitionEnd(body, function() {
+                if (KTUtil.get('kt_page_portlet')) {
+                    pageStickyPortlet.updateSticky();      
+                }
+            });
         });
     }
 
@@ -9870,71 +9917,44 @@ var KTLayout = function() {
 
     // Init page sticky portlet
     var initPageStickyPortlet = function() {
-        var asideWidth = 260;
-        var asideMinimizeWidth = 78;
-        var asideSecondaryWidth = 60;
-        var asideSecondaryExpandedWidth = 310;
-
         return new KTPortlet('kt_page_portlet', {
             sticky: {
                 offset: parseInt(KTUtil.css( KTUtil.get('kt_header'), 'height')),
                 zIndex: 90,
                 position: {
                     top: function() {
-                        var h = 0;
+                        var pos = 0;
 
                         if (KTUtil.isInResponsiveRange('desktop')) {
                             if (KTUtil.hasClass(body, 'kt-header--fixed')) {
-                                h = h + parseInt(KTUtil.css( KTUtil.get('kt_header'), 'height') );
+                                pos = pos + parseInt(KTUtil.css( KTUtil.get('kt_header'), 'height') );
                             }
                             
                             if (KTUtil.hasClass(body, 'kt-subheader--fixed') && KTUtil.get('kt_subheader')) {
-                                h = h + parseInt(KTUtil.css( KTUtil.get('kt_subheader'), 'height') );
+                                pos = pos + parseInt(KTUtil.css( KTUtil.get('kt_subheader'), 'height') );
                             }
                         } else {
                             if (KTUtil.hasClass(body, 'kt-header-mobile--fixed')) {
-                                h = h + parseInt(KTUtil.css( KTUtil.get('kt_header_mobile'), 'height') );
+                                pos = pos + parseInt(KTUtil.css( KTUtil.get('kt_header_mobile'), 'height') );
                             }
                         }    
                         
-                        return h;
+                        return pos;
                     },
-                    left: function() {
-                        var left = 0;
+                    left: function(portlet) {
+						var porletEl = portlet.getSelf();      
+						
+						return KTUtil.offset(porletEl).left;
+					},
+					right: function(portlet) {
+						var porletEl = portlet.getSelf();      
 
-                        if (KTUtil.isInResponsiveRange('desktop')) {
-                            if (KTUtil.hasClass(body, 'kt-aside--minimize')) {
-                                left += asideMinimizeWidth;
-                            } else if (KTUtil.hasClass(body, 'kt-aside--enabled')) {
-                                left += asideWidth;
-                            } 
-                        }
-
-                        left += parseInt(KTUtil.css( KTUtil.get('kt_content'), 'paddingLeft'));
-
-                        return left; 
-                    },
-                    right: function() {
-                        var right = 0;
-
-                        if (KTUtil.isInResponsiveRange('desktop')) {                            
-                            if (KTUtil.hasClass(body, 'kt-aside-secondary--enabled')) {
-                                if (KTUtil.hasClass(body, 'kt-aside-secondary--expanded')) {
-                                    right += asideSecondaryExpandedWidth + asideSecondaryWidth;
-                                } else {
-                                    right += asideSecondaryWidth; 
-                                }
-                            } else {
-                                right += parseInt(KTUtil.css( KTUtil.get('kt_content'), 'paddingRight'));
-                            }
-                        }
-
-                        if (KTUtil.get('kt_aside_secondary')) {
-                            right += parseInt(KTUtil.css( KTUtil.get('kt_content'), 'paddingRight') );
-                        }
-
-                        return right;
-                    }
+						var portletWidth = parseInt(KTUtil.css(porletEl, 'width'));
+						var bodyWidth = parseInt(KTUtil.css(KTUtil.get('body'), 'width'));
+						var portletOffsetLeft = KTUtil.offset(porletEl).left;
+					
+						return bodyWidth - portletWidth - portletOffsetLeft;
+					}
                 }
             }
         });
@@ -10049,6 +10069,11 @@ var KTLayout = function() {
         }
     };
 }();
+
+// webpack support
+if (typeof module !== 'undefined') {
+    module.exports = KTLayout;
+}
 
 // Init on page load completed
 KTUtil.ready(function() {

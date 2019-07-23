@@ -244,6 +244,7 @@ div.dt-button-collection.dropdown-menu {
   display: block;
   z-index: 2002;
   -webkit-column-gap: 8px;
+  -moz-column-gap: 8px;
   -ms-column-gap: 8px;
   -o-column-gap: 8px;
   column-gap: 8px; }
@@ -266,12 +267,14 @@ div.dt-button-collection.dropdown-menu.fixed.four-column {
 
 div.dt-button-collection.dropdown-menu > * {
   -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
   break-inside: avoid; }
 
 div.dt-button-collection.dropdown-menu.two-column {
   width: 300px;
   padding-bottom: 1px;
   -webkit-column-count: 2;
+  -moz-column-count: 2;
   -ms-column-count: 2;
   -o-column-count: 2;
   column-count: 2; }
@@ -280,6 +283,7 @@ div.dt-button-collection.dropdown-menu.three-column {
   width: 450px;
   padding-bottom: 1px;
   -webkit-column-count: 3;
+  -moz-column-count: 3;
   -ms-column-count: 3;
   -o-column-count: 3;
   column-count: 3; }
@@ -288,6 +292,7 @@ div.dt-button-collection.dropdown-menu.four-column {
   width: 600px;
   padding-bottom: 1px;
   -webkit-column-count: 4;
+  -moz-column-count: 4;
   -ms-column-count: 4;
   -o-column-count: 4;
   column-count: 4; }
@@ -297,6 +302,7 @@ div.dt-button-collection.dropdown-menu .dt-button {
 
 div.dt-button-collection {
   -webkit-column-gap: 8px;
+  -moz-column-gap: 8px;
   -ms-column-gap: 8px;
   -o-column-gap: 8px;
   column-gap: 8px; }
@@ -319,12 +325,14 @@ div.dt-button-collection.fixed.four-column {
 
 div.dt-button-collection > * {
   -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
   break-inside: avoid; }
 
 div.dt-button-collection.two-column {
   width: 300px;
   padding-bottom: 1px;
   -webkit-column-count: 2;
+  -moz-column-count: 2;
   -ms-column-count: 2;
   -o-column-count: 2;
   column-count: 2; }
@@ -333,6 +341,7 @@ div.dt-button-collection.three-column {
   width: 450px;
   padding-bottom: 1px;
   -webkit-column-count: 3;
+  -moz-column-count: 3;
   -ms-column-count: 3;
   -o-column-count: 3;
   column-count: 3; }
@@ -341,6 +350,7 @@ div.dt-button-collection.four-column {
   width: 600px;
   padding-bottom: 1px;
   -webkit-column-count: 4;
+  -moz-column-count: 4;
   -ms-column-count: 4;
   -o-column-count: 4;
   column-count: 4; }
