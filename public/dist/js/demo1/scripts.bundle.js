@@ -6550,6 +6550,9 @@ if (typeof module !== 'undefined') {
 					dataType: 'json',
 					method: 'POST',
 					data: {},
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
 					timeout: Plugin.getOption('data.source.read.timeout') || 30000,
 				};
 
