@@ -2,7 +2,8 @@
      style="background-image: url({{assets('media/misc/head_bg_sm.jpg')}})">
   <div class="kt-user-card__wrapper">
     <div class="kt-user-card__pic">
-      <img alt="Pic" src="{{$user->avatar}}"/>
+      <!--use "kt-rounded" class for rounded avatar style-->
+      <img alt="Pic" src="{{$user->avatar}}" class="kt-rounded-"/>
     </div>
     <div class="kt-user-card__details">
       <div class="kt-user-card__name">{{$user->name}}</div>
@@ -37,7 +38,8 @@
     </a>
   </li>
   @endadmin
-  <li class="kt-nav__item kt-nav__item--custom kt-margin-t-15">
+  <li class="kt-nav__separator kt-nav__separator--fit"></li>
+  <li class="kt-nav__custom kt-space-between">
     <a href="{{ route('logout') }}" class="btn btn-label-brand btn-upper btn-sm btn-bold">
       登出
     </a>

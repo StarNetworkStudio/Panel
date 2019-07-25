@@ -33,7 +33,8 @@
 
 <!-- end::Head -->
 <!-- begin::Body -->
-<body class="kt-page--loading-enabled kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--static kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--static">
+<body
+  class="kt-page--loading-enabled kt-page--loading kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
 @include('common.keen.partials._layout-page-loader')
 @include('common.keen._layout')
 @include('common.dependencies.script')

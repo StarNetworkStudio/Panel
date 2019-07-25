@@ -6,7 +6,6 @@
         </span>
   </div>
   <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround">
-    <!--[html-partial:include:{"file":"partials\/_dropdown-languages.html"}]/-->
     @include('common.keen.partials._dropdown-languages')
   </div>
 </div>

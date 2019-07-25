@@ -1,5 +1,5 @@
 <!-- begin:: Header Mobile -->
-<div id="kt_header_mobile" class="kt-header-mobile ">
+<div id="kt_header_mobile" class="kt-header-mobile kt-header-mobile--fixed ">
   <div class="kt-header-mobile__logo">
     <a href="?page=index">
       <img alt="Logo" src="{{assets('media/logos/logo-6.png')}}"/>
