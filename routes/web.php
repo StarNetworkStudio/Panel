@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     Route::view('/users', 'admin.users');
 
-    Route::any('/user-list', 'AdminController@getUserList');
+    Route::any('/user-list.json', 'AdminController@getUserList');
 });
 //用户
 Route::group(['middleware' => 'auth', 'prefix' => 'user'], function () {
