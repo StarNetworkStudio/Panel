@@ -17,7 +17,7 @@ matrix:
   - php: 7.3
     after_success:
       - ssh root@34.92.170.56 ./travis-shell-script-dev.sh
-  - node_js: 10
-    language: node_js
-    install: yarn
-    script: echo '测试'
+#  - node_js: 10
+#    language: node_js
+#    install: yarn
+#    script: echo '测试'
