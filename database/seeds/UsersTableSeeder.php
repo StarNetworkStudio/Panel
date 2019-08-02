@@ -17,8 +17,8 @@ class UsersTableSeeder extends Seeder
 
         $user = User::find(1);
         $user->name = 'admin';
-        $user->email = 'stars_kim@163.com';
-        $user->avatar = avatar('stars_kim@163.com');
+        $user->email = 'admin@starskim.cn';
+        $user->avatar = avatar('admin@starskim.cn');
         $user->ip = '127.0.0.1';
         $user->permission = User::SUPER_ADMIN;
         $user->save();
