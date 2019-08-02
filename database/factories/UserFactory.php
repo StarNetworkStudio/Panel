@@ -16,10 +16,11 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $email=$faker->unique()->safeEmail;
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'avatar' => avatar($faker->unique()->safeEmail),
+        'email' => $email,
+        'avatar' => avatar($email),
         'email_verified_at' => now(),
         'password' => '$2y$10$RM8oaL8moeRO7ZzXQgLh7OTZoSG3ZoV29Kh2EaJChGZK9maiVYPkq', // 12345678
         'ip'=> '127.0.0.1',
