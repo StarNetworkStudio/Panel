@@ -18,6 +18,8 @@ matrix:
       addons:
         ssh_known_hosts: "$IP"
       after_success:
+        - cat ~/.ssh/known_hosts
+        - cat $IP
         - ssh root@$IP ./travis-shell-script-dev.sh
     - node_js: 12
       language: node_js
