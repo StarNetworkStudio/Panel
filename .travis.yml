@@ -16,11 +16,9 @@ matrix:
           -in .travis/travisci.enc -out ~/.ssh/id_rsa -d
         - chmod 600 ~/.ssh/id_rsa
       addons:
-        ssh_known_hosts: "$IP"
+        ssh_known_hosts: hk.starskim.com
       after_success:
-        - cat ~/.ssh/known_hosts
-        - echo $IP
-        - ssh root@$IP ./travis-shell-script-dev.sh
+        - ssh root@hk.starskim.com ./travis-shell-script-dev.sh
     - node_js: 12
       language: node_js
       install: cd tools && yarn
