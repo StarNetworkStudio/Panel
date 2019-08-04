@@ -1,0 +1,25 @@
+language: php
+notifications:
+  webhooks: https://oapi.dingtalk.com/robot/send?access_token=6ff5ad7df478f67af4af902032862312ce6ea8389a89fc2dc0899ae7770882b8
+cache:
+  apt: true
+  directories:
+    - vendor
+    - node_modules
+install: composer install --no-interaction --prefer-dist
+script: phpunit
+matrix:
+  include:
+    - php: 7.3
+      before_install:
+        - openssl aes-256-cbc -K $encrypted_72a15151d2bc_key -iv $encrypted_72a15151d2bc_iv
+          -in .travis/travisci.enc -out ~/.ssh/id_rsa -d
+        - chmod 600 ~/.ssh/id_rsa
+      addons:
+        ssh_known_hosts: "$IP"
+      after_success:
+        - ssh root@$IP ./travis-shell-script-dev.sh
+    - node_js: 12
+      language: node_js
+      install: cd tools && yarn
+      script: gulp build
