@@ -44,4 +44,53 @@ return [
         ],
     ],
 
+    // FACEBOOK
+    'facebook' => [
+        'client_id' => env('FACEBOOK_KEY'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT_URI')
+    ],
+
+    // GOOGLE_CLIENT
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_CALLBACK_URL'),
+    ],
+
+    // QQ
+    'qq' => [
+        'client_id' => env('QQ_KEY'),
+        'client_secret' => env('QQ_SECRET'),
+        'redirect' => env('QQ_REDIRECT_URI')
+    ],
+
+    // TWITTER
+    'twitter' => [
+        'client_id' => env('TWITTER_KEY'),
+        'client_secret' => env('TWITTER_SECRET'),
+        'redirect' => env('TWITTER_REDIRECT_URI')
+    ],
+
+    // WEIBO
+    'weibo' => [
+        'client_id' => env('WEIBO_KEY'),
+        'client_secret' => env('WEIBO_SECRET'),
+        'redirect' => env('WEIBO_REDIRECT_URI')
+    ],
+
+    // WEIXIN
+    'weixin' => [
+        'client_id' => env('WEIXIN_KEY'),
+        'client_secret' => env('WEIXIN_SECRET'),
+        'redirect' => env('WEIXIN_REDIRECT_URI')
+    ],
+
+    //WEIXINWEB
+    'weixinweb' => [
+        'client_id' => env('WEIXINWEB_KEY'),
+        'client_secret' => env('WEIXINWEB_SECRET'),
+        'redirect' => env('WEIXINWEB_REDIRECT_URI')
+    ],
+
 ];

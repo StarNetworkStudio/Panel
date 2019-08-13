@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Overtrue\EasySms\PhoneNumber;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -59,5 +60,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
     public function isAdmin()
     {
         return $this->permission >= static::ADMIN;
+    }
+
+    public function routeNotificationForEasySms($notification)
+    {
+        return new PhoneNumber($this->number, $this->area_code);
     }
 }

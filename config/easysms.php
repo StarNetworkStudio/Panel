@@ -36,7 +36,7 @@ return [
             'api_key' => env('YUNPIAN_API_KEY'),
         ],
 
-        // ...
+        // 阿里云
         'aliyun' => [
             'access_key_id' => env('ALIYUN_KEY_ID'),
             'access_key_secret' => env('ALIYUN_KEY_SECRET'),
