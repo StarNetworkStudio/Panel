@@ -8,10 +8,10 @@ cache:
     - node_modules
 install:
   - composer global require deployer/deployer
+  - dep
   - composer install --no-interaction --prefer-dist
 script:
   - phpunit
-  - dep --version
 matrix:
   include:
     - php: 7.3
