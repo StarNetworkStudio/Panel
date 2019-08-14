@@ -1,4 +1,5 @@
-language: php
+addons:
+  ssh_known_hosts: hk.starskim.com
 notifications:
   webhooks: https://oapi.dingtalk.com/robot/send?access_token=6ff5ad7df478f67af4af902032862312ce6ea8389a89fc2dc0899ae7770882b8
 cache:
@@ -6,10 +7,10 @@ cache:
   directories:
     - vendor
     - node_modules
+language: php
 install:
   - composer install --no-interaction --prefer-dist
 script:
-  - php vendor/bin/dep
   - phpunit
 matrix:
   include:
@@ -21,7 +22,7 @@ matrix:
       addons:
         ssh_known_hosts: hk.starskim.com
       after_success:
-        - ssh root@hk.starskim.com ./travis-shell-script-dev.sh
+        - vendor/bin/dep deploy
     - node_js: 12
       language: node_js
       install: cd tools && yarn
