@@ -16,6 +16,7 @@
         "laravel/tinker": "^1.0",
         "leonis/easysms-notification-channel": "^1.0",
         "mews/captcha": "~2.0",
+        "pragmarx/google2fa-laravel": "^1.0",
         "socialiteproviders/facebook": "dev-master",
         "socialiteproviders/google": "^3.0",
         "socialiteproviders/qq": "^3.0",
