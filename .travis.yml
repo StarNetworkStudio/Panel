@@ -6,7 +6,7 @@ cache:
   apt: true
   directories:
     - vendor
-    - node_modules
+    - tools/node_modules
 language: php
 install:
   - composer install --no-interaction --prefer-dist
