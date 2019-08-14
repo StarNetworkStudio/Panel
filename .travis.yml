@@ -7,10 +7,9 @@ cache:
     - vendor
     - node_modules
 install:
-  - composer global require deployer/deployer
-  - vendor/bin/dep
   - composer install --no-interaction --prefer-dist
 script:
+  - dep
   - phpunit
 matrix:
   include:
