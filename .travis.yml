@@ -8,7 +8,7 @@ cache:
     - node_modules
 install:
   - composer global require deployer/deployer
-  - dep
+  - vendor/bin/dep
   - composer install --no-interaction --prefer-dist
 script:
   - phpunit
