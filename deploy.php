@@ -44,7 +44,6 @@ task('deploy:chown', function () {
 });
 
 after('deploy:vendors', 'deploy:yarn');
-after('artisan:migrate:fresh', 'deploy:chown');
-before('deploy:symlink', 'artisan:migrate:fresh');
+before('deploy:symlink', 'deploy:chown');
 // 如果部署失败，自动解除部署锁定状态，以免影响下次执行
 after('deploy:failed', 'deploy:unlock');
