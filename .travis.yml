@@ -11,6 +11,8 @@ script: phpunit
 matrix:
   include:
     - php: 7.3
+      script:
+        - dep --version
       before_install:
         - openssl aes-256-cbc -K $encrypted_72a15151d2bc_key -iv $encrypted_72a15151d2bc_iv
           -in .travis/travisci.enc -out ~/.ssh/id_rsa -d
