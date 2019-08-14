@@ -40,7 +40,7 @@ task('deploy:yarn', function () {
 // 设置文件权限
 desc('Website root permissions');
 task('deploy:chown', function () {
-    run('chown -R www.www /data/wwwroot/ && find /data/wwwroot/ -type d -exec chmod 755 {} \; && find /data/wwwroot/ -type f -exec chmod 644 {} \;');
+    run('chown -R www.www /data/wwwroot/ && find /data/wwwroot/ -type d -exec chmod 755 {} \; && find /data/wwwroot/ -type f -exec chmod 644 {} \;', ['timeout' => 600]);
 });
 
 after('deploy:vendors', 'deploy:yarn');
