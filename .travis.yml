@@ -9,7 +9,7 @@ cache:
 install:
   - composer install --no-interaction --prefer-dist
 script:
-  - dep
+  - php vendor/bin/dep
   - phpunit
 matrix:
   include:
