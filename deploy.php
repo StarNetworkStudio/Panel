@@ -10,7 +10,7 @@ set('repository', 'git@github.com:starnetworkstudio/Panel.git');
 set('git_tty', true);
 
 add('shared_files', []);
-add('shared_dirs', ['tools/node_modules', 'vendor','public/dist']);
+add('shared_dirs', ['tools/node_modules', 'vendor','resources/assets/dist']);
 add('writable_dirs', []);
 
 // 保存最近五次部署，这样的话回滚最多也只能回滚到前 5 个版本
@@ -31,6 +31,29 @@ host('hk.starskim.com')
     ->multiplexing(true)
     ->set('http_user', 'www');
 
+// Tasks
+desc('Deploy super-miner-proxy project');
+task('deploy', [
+    'deploy:info',
+    'deploy:prepare',
+    'deploy:lock',
+    'deploy:release',
+    'deploy:update_code',
+    'deploy:shared',
+    'deploy:vendors',
+    'deploy:yarn',
+    'deploy:writable',
+    'artisan:view:cache',
+    'artisan:config:cache',
+    'artisan:optimize',
+    'artisan:migrate',
+    'deploy:chown',
+    'deploy:symlink',
+    'deploy:unlock',
+    'cleanup',
+    'success'
+]);
+
 // 定义一个前端编译的任务
 desc('Yarn');
 task('deploy:yarn', function () {
@@ -43,7 +66,5 @@ task('deploy:chown', function () {
     run('chown -R www.www /data/wwwroot/ && find /data/wwwroot/ -type d -exec chmod 755 {} \; && find /data/wwwroot/ -type f -exec chmod 644 {} \;', ['timeout' => 600]);
 });
 
-after('deploy:vendors', 'deploy:yarn');
-before('deploy:symlink', 'deploy:chown');
 // 如果部署失败，自动解除部署锁定状态，以免影响下次执行
 after('deploy:failed', 'deploy:unlock');
