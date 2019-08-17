@@ -425,36 +425,6 @@ module.exports = {
                 switch (type) {
                     case 'styles':
                         if (bundle.bundle.hasOwnProperty(type)) {
-                            // rtl css bundle
-                            // if (build.config.compile.rtl.enabled) {
-                            //     var toRtlFiles = [];
-                            //     var rtlFiles = [];
-                            //     bundle.src[type].forEach(function (path) {
-                            //         // get rtl css file path
-                            //         var cssFile = _self.pathOnly(path) + '/' + _self.baseName(path) + '.rtl.css';
-                            //         // check if rtl file is exist
-                            //         if (fs.existsSync(cssFile) && build.config.compile.rtl.skip.indexOf(_self.baseName(path)) === -1) {
-                            //             rtlFiles = rtlFiles.concat(cssFile);
-                            //         } else {
-                            //             // rtl css file not exist, use default css file
-                            //             cssFile = path;
-                            //         }
-                            //         toRtlFiles = toRtlFiles.concat(cssFile);
-                            //     });
-                            //
-                            //     var shouldRtl = false;
-                            //     if (_self.baseName(bundle.bundle[type]) === 'style.bundle') {
-                            //         shouldRtl = true;
-                            //     }
-                            //     var rtlOutput = _self.pathOnly(bundle.bundle[type]) + '/' + _self.baseName(bundle.bundle[type]) + '.rtl.css';
-                            //     stream = gulp.src(toRtlFiles, {allowEmpty: true}).pipe(_self.cssRewriter(bundle.bundle[type])()).pipe(concat(_self.baseName(bundle.bundle[type]) + '.rtl.css')).pipe(_self.cssChannel(shouldRtl)());
-                            //     var output = _self.outputChannel(rtlOutput, _self.baseName(bundle.bundle[type]) + '.rtl.css', type)();
-                            //     if (output) {
-                            //         stream.pipe(output);
-                            //     }
-                            //     streams.push(stream);
-                            // }
-
                             // default css bundle
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssRewriter(bundle.bundle[type])()).pipe(concat(outputFile)).pipe(_self.cssChannel()());
                             var output = _self.outputChannel(bundle.bundle[type], outputFile, type)();
@@ -522,21 +492,6 @@ module.exports = {
                             }
                             streams.push(stream);
 
-                            // rtl styles for scss
-                            // var shouldRtl = false;
-                            // if (build.config.compile.rtl.enabled) {
-                            //     bundle.src[type].forEach(function (output) {
-                            //         if (output.indexOf('.scss') !== -1) {
-                            //             return shouldRtl = true;
-                            //         }
-                            //     });
-                            //     stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel(shouldRtl)()).pipe(rename({suffix: '.rtl'}));
-                            //     var output = _self.outputChannel(bundle.output[type], undefined, type)();
-                            //     if (output) {
-                            //         stream.pipe(output);
-                            //     }
-                            //     streams.push(stream);
-                            // }
                             break;
                         case 'styles-by-demo':
                             // custom scss with suffix demos
@@ -554,25 +509,6 @@ module.exports = {
                                 }
                                 streams.push(stream);
 
-                                // rtl styles for scss
-                                // var shouldRtl = false;
-                                // if (build.config.compile.rtl.enabled) {
-                                //     bundle.src[type].forEach(function (output) {
-                                //         if (output.indexOf('.scss') !== -1) {
-                                //             return shouldRtl = true;
-                                //         }
-                                //     });
-                                //     stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel(shouldRtl, [
-                                //         '../themes/themes/' + module.exports.config.theme + '/src/sass/theme/demos/' + demo + '/', //  development
-                                //         '../resources/assets/src/sass/theme/demos/' + demo + '/', // release default package
-                                //         '../src/sass/theme/demos/' + demo + '/', // release angular package
-                                //     ])()).pipe(rename({suffix: '.rtl'}));
-                                //     var output = _self.outputChannel(bundle.output[type], undefined, type)();
-                                //     if (output) {
-                                //         stream.pipe(output);
-                                //     }
-                                //     streams.push(stream);
-                                // }
                             });
                             break;
                         case 'scripts':
@@ -601,12 +537,6 @@ module.exports = {
 
     getDemos: function () {
         var demos = Object.keys(build.build.demos);
-        // build by demo, leave demo empty to generate all demos
-        if (typeof build.config.demo !== 'undefined' && build.config.demo !== '') {
-            demos = build.config.demo.split(',').map(function (item) {
-                return item.trim();
-            });
-        }
         return demos;
     },
 
