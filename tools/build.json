@@ -16,7 +16,7 @@
             "node_modules": "./node_modules"
         },
         "dist": [
-            "../public/dist"
+            "../resources/assets/dist"
         ]
     },
     "build": {
