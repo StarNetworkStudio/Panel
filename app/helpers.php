@@ -23,7 +23,7 @@ if (!function_exists('assets')) {
 
     function assets($relativeUri)
     {
-        return url("dist/$relativeUri");
+        return url("resources/assets/dist/$relativeUri");
     }
 }
 
