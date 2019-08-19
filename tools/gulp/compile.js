@@ -25,14 +25,6 @@ if (args.prod !== false) {
 
 // task to bundle js/css
 gulp.task('build-bundle', function (cb) {
-    //exclude by demo
-    if (args.exclude !== '' && typeof args.exclude === 'string') {
-        var exclude = args.exclude.split(',');
-        exclude.forEach(function (demo) {
-            delete build.build.demos[demo];
-        });
-    }
-
     func.objectWalkRecursive(build.build, function (val, key) {
         if (val.hasOwnProperty('src')) {
             if (val.hasOwnProperty('bundle')) {

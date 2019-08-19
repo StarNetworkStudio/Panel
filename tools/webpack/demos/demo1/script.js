@@ -9,4 +9,4 @@
 require("../../scripts");
 
 // demo scripts
-window.KTLayout = require("../../../../resources/assets/src/js/theme/demos/demo1/layout.js");
+window.KTLayout = require("../../../../resources/assets/src/js/theme/demos/layout.js");

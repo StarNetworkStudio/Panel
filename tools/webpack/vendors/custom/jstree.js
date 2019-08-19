@@ -4,7 +4,7 @@
  * Define the output of this file. The output of CSS and JS file will be auto detected.
  *
  * @output vendors/custom/jstree/jstree.bundle
- * @images ../src/media/vendors/jstree/32px.png
+ * @images ../src/images/vendors/jstree/32px.png
  */
 
 // dependencies

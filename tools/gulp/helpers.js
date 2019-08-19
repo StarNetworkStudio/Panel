@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var rename = require('gulp-rename');
 var rewrite = require('gulp-rewrite-css');
 var concat = require('gulp-concat');
 var lazypipe = require('lazypipe');
@@ -11,10 +10,8 @@ var uglify = require('gulp-uglify-es').default;
 var sourcemaps = require('gulp-sourcemaps');
 var build = require('./build');
 var path = require('path');
-var fs = require('fs');
 var filter = require('gulp-filter');
 var autoprefixer = require('gulp-autoprefixer');
-var rtlcss = require('gulp-rtlcss');
 var cleancss = require('gulp-clean-css');
 var yargs = require('yargs');
 
@@ -108,7 +105,7 @@ module.exports = {
     /**
      * Add CSS compilation options to gulp pipe
      */
-    cssChannel: function (rtl, includePaths) {
+    cssChannel: function (includePaths) {
         var config = this.config.compile;
         return lazypipe().pipe(function () {
             return gulpif(config.cssSourcemaps, sourcemaps.init({loadMaps: true, debug: config.debug}));
@@ -118,9 +115,6 @@ module.exports = {
                 includePaths: includePaths,
                 // outputStyle: config.cssMinify ? 'compressed' : '',
             }).on('error', sass.logError);
-        }).pipe(function () {
-            // convert rtl for style.bundle.css only here, others already converted before
-            return gulpif(rtl, rtlcss());
         }).pipe(function () {
             return gulpif(config.cssMinify, cleancss());
         }).pipe(function () {
@@ -142,7 +136,7 @@ module.exports = {
      */
     outputChannel: function (path, outputFile, type) {
         if (!allAssets) {
-            if (args.sass && ['styles', 'styles-by-demo'].indexOf(type) === -1) {
+            if (args.sass && ['styles'].indexOf(type) === -1) {
                 return lazypipe().pipe(function () {
                     // noop
                 });
@@ -309,25 +303,6 @@ module.exports = {
         return '';
     },
 
-    baseName: function (str) {
-        var base = new String(str).substring(str.lastIndexOf('/') + 1);
-        if (base.lastIndexOf('.') != -1) {
-            base = base.substring(0, base.lastIndexOf('.'));
-        }
-        return base;
-    },
-
-    /**
-     * Remove file name and get the path
-     */
-    pathOnly: function (str) {
-        var array = str.split('/');
-        if (array.length > 0) {
-            array.pop();
-        }
-        return array.join('/');
-    },
-
     /**
      * Bundle
      * @param bundle
@@ -434,7 +409,6 @@ module.exports = {
                             streams.push(stream);
                         }
                         break;
-
                     case 'scripts':
                         if (bundle.bundle.hasOwnProperty(type)) {
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(concat(outputFile)).pipe(_self.jsChannel()());
@@ -493,24 +467,6 @@ module.exports = {
                             streams.push(stream);
 
                             break;
-                        case 'styles-by-demo':
-                            // custom scss with suffix demos
-                            module.exports.getDemos().forEach(function (demo) {
-                                // custom page scss
-                                stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel(false, [
-                                    '../themes/themes/' + module.exports.config.theme + '/src/sass/theme/demos/' + demo + '/', //  development
-                                    '../resources/assets/src/sass/theme/demos/' + demo + '/', // release default package
-                                    '../src/sass/theme/demos/' + demo + '/', // release angular package
-                                ])());// pipe(rename({ suffix: '.' + demo })).
-
-                                var output = _self.outputChannel(bundle.output[type], undefined, type)();
-                                if (output) {
-                                    stream.pipe(output);
-                                }
-                                streams.push(stream);
-
-                            });
-                            break;
                         case 'scripts':
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.jsChannel()());
                             var output = _self.outputChannel(bundle.output[type], undefined, type)();
@@ -539,11 +495,4 @@ module.exports = {
         var demos = Object.keys(build.build.demos);
         return demos;
     },
-
-    getFolders: function (dir) {
-        return fs.readdirSync(dir).filter(function (file) {
-            return fs.statSync(path.join(dir, file)).isDirectory();
-        });
-    },
-
 };

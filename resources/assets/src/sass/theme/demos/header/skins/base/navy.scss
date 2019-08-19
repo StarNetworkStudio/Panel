@@ -1,39 +1,26 @@
 //
-// Header Light Skin
+// Header Dark Skin
 //
 
 
 
 
 // Include framework config
-@import "../../../../../config";
+@import "../../../../config";
 
 // Include demo config
 @import "../../../config";
 
-
 $kt-header-item-font-color: #ffffff;
-$kt-header-item-icon-color: #b4b8ce;
-$kt-header-item-hover-bg: #f0f3ff;
+$kt-header-icon-font-color: #6e7899;
+$kt-header-item-hover-bg: #282f48;
+$kt-header-bg-color: #536be2;
 
 // Desktop mode
 @include kt-desktop {
 	.kt-header {
-		background-color: kt-get($kt-layout-skins, light);
-		border-bottom: 1px solid #eff0f6;
-
-		// Minimize 
-		.kt-header--fixed & {
-			box-shadow: 0px 0px 40px 0px rgba(82,63,105,0.1);
-		}
-
-		.kt-header--static & {
-			border-bottom: 1px solid #eff0f6;
-		}
-
-		.kt-header--fixed.kt-subheader--fixed & {
-			box-shadow: none;
-		}	
+		background-color: kt-get($kt-layout-skins, navy);
+		box-shadow: 0px 0px 40px 0px rgba(82,63,105,0.1);
 
 		// Menu
 		.kt-header-menu {
@@ -43,16 +30,16 @@ $kt-header-item-hover-bg: #f0f3ff;
 						border-radius: 4px;
 
 						.kt-menu__link-text {
-							color: #6c7293;
+							color: #c0c4d1;
 							font-weight: 500;
 						}
 
 						.kt-menu__hor-arrow {
-							color: #c8cde8;
+							color: #677191;
 						}
 
 						.kt-menu__hor-icon {
-							color: #c8cde8;
+							color: #677191;
 						}
 					}
 
@@ -61,17 +48,17 @@ $kt-header-item-hover-bg: #f0f3ff;
 					&:hover {
 						> .kt-menu__link {
 							background-color: $kt-header-item-hover-bg;
-								
+							
 							.kt-menu__link-text {
-								color: kt-brand-color();
+								color: $kt-header-item-font-color;
 							}
 
 							.kt-menu__hor-arrow {
-								color: kt-brand-color();
+								color: $kt-header-item-font-color;
 							}
 
 							.kt-menu__hor-icon {
-								color: kt-brand-color();
+								color: $kt-header-item-font-color;
 							}
 						}	
 					}
@@ -80,10 +67,12 @@ $kt-header-item-hover-bg: #f0f3ff;
 		}
 	}
 }
-		
+
 // General mode
 .kt-header {
 	.kt-header__topbar {
+		padding-right: 15px;				
+
 		.kt-aside-secondary--enabled & {
 			padding-right: 0;
 		}
@@ -91,31 +80,26 @@ $kt-header-item-hover-bg: #f0f3ff;
 		.kt-header__topbar-item {
 			.kt-header__topbar-icon {
 				i {
-					@include kt-transition();
-					color: $kt-header-item-icon-color;
+					color: $kt-header-icon-font-color;
 				}
 			}
 
 			// User profile
 			&.kt-header__topbar-item--user {
-				.kt-header__topbar-user {
-					.kt-header__topbar-welcome {
-						@include kt-transition();
-						color: #959cb6;
-					}
+				.kt-header__topbar-welcome {
+					color: #6b7594;
+				}
 
-					.kt-header__topbar-username {
-						@include kt-transition();
-						color: #6c7293;
-					}
-				}	
+				.kt-header__topbar-username {
+					color: #c0c4d1;
+				}		
 			}		
 
 			// Quick panel 
-			&.kt-header__topbar-item--quick-panel {
+			&.kt-header__topbar--quick-panel-toggler {
 				.kt-header__topbar-icon {
 					i {
-						color: kt-brand-color();
+						color: $kt-header-icon-font-color;
 					}
 				}
 			}
@@ -123,12 +107,9 @@ $kt-header-item-hover-bg: #f0f3ff;
 			&:hover,
 			&.show {
 				.kt-header__topbar-icon {
-					@include kt-transition();
 					background-color: $kt-header-item-hover-bg;
-
 					i {
-						@include kt-transition();
-						color: kt-brand-color();
+						color: #fff;
 					}	
 				}
 
@@ -136,22 +117,19 @@ $kt-header-item-hover-bg: #f0f3ff;
 					.kt-header__topbar-user {
 						@include kt-transition();
 						background-color: $kt-header-item-hover-bg;
+
+						.kt-header__topbar-username {
+							color: $kt-header-item-font-color;
+						}
 					}
 				}
 
-				&.kt-header__topbar-item--quick-panel {
-					.kt-aside-secondary--enabled & {
-						@include kt-transition();
-						background-color: kt-brand-color();
+				&.kt-header__topbar--quick-panel-toggler {
+					background-color: kt-brand-color();
 
-						.kt-header__topbar-icon {
-							@include kt-transition();
-							background-color: transparent !important;
-
-							i {
-								@include kt-transition();
-								color: kt-brand-color(inverse);
-							}
+					.kt-header__topbar-icon {
+						i {
+							color: kt-brand-color(inverse);
 						}
 					}
 				}
@@ -175,14 +153,14 @@ $kt-header-item-hover-bg: #f0f3ff;
 @include kt-tablet-and-mobile {
 	// Topbar
 	.kt-header__topbar {
-		background-color: #ffffff;
+		background-color: kt-get($kt-layout-skins, navy);
 		box-shadow: none;
 	}
 
 	.kt-header__topbar--mobile-on {
 		.kt-header__topbar {
 			box-shadow: 0px 0px 40px 0px rgba(82,63,105,0.1);
-			border-top: 1px solid kt-base-color(grey, 2);
+			border-top: 1px solid #2e3448; 
 		}
 	}
 }

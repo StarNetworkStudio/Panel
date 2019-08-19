@@ -5,26 +5,26 @@
 
 
 // Base
-@import "../core/base/container";
-@import "../core/base/page-loader";
-@import "../core/base/normalize";
-@import "../core/base/animations";
-@import "../core/base/helpers";
-@import "../core/base/mixins/grid";
-@import "../core/base/grid";
-@import "../core/base/portlet";
-@import "../core/base/datatable";
-@import "../core/base/scrolltop";
-@import "../core/base/form";
-@import "../core/base/input-icon";
-@import "../core/base/checkbox";
-@import "../core/base/radio";
-@import "../core/base/switch";
-@import "../core/base/option";
-@import "../core/base/avatar";
-@import "../core/base/spinner";
-@import "../core/base/loader";
-@import "../core/base/pulse";
+@import "base/container";
+@import "base/page-loader";
+@import "base/normalize";
+@import "base/animations";
+@import "base/helpers";
+@import "base/mixins/grid";
+@import "base/grid";
+@import "base/portlet";
+@import "base/datatable";
+@import "base/scrolltop";
+@import "base/form";
+@import "base/input-icon";
+@import "base/checkbox";
+@import "base/radio";
+@import "base/switch";
+@import "base/option";
+@import "base/avatar";
+@import "base/spinner";
+@import "base/loader";
+@import "base/pulse";
 
 // General
 @import "general/grid-nav-v2";

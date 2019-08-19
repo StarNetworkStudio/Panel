@@ -3,7 +3,6 @@
     "desc": "Keen build config file for Gulp",
     "version": "1.4.1",
     "config": {
-        "demo": "",
         "debug": false,
         "compile": {
             "jsUglify": false,
@@ -484,7 +483,7 @@
                             "{$config.path.node_modules}/jstree/dist/jstree.js"
                         ],
                         "images": [
-                            "{$config.path.src}/media/vendors/jstree/32px.png",
+                            "{$config.path.src}/images/vendors/jstree/32px.png",
                             "{$config.path.node_modules}/jstree/dist/themes/default/throbber.gif"
                         ]
                     },
@@ -511,80 +510,78 @@
             }
         },
         "demos": {
-            "demo1": {
-                "base": {
-                    "src": {
-                        "styles": [
-                            "{$config.path.src}/sass/theme/demos/demo1/style.scss"
-                        ],
-                        "scripts": [
-                            "{$config.path.src}/js/theme/core/*.js",
-                            "{$config.path.src}/js/theme/core/base/**/*.js",
-                            "{$config.path.src}/js/theme/core/**/*.js",
-                            "{$config.path.src}/js/theme/demos/demo1/**/*.js"
-                        ]
-                    },
-                    "bundle": {
-                        "styles": "{$config.dist}/css/demo1/style.bundle.css",
-                        "scripts": "{$config.dist}/js/demo1/scripts.bundle.js"
-                    }
-                },
-                "skins": {
-                    "header": {
-                        "src": {
-                            "styles": [
-                                "{$config.path.src}/sass/theme/demos/demo1/header/skins/**/*.scss"
-                            ]
-                        },
-                        "output": {
-                            "styles": "{$config.dist}/css/demo1/skins/header/"
-                        }
-                    },
-                    "brand": {
-                        "src": {
-                            "styles": [
-                                "{$config.path.src}/sass/theme/demos/demo1/brand/skins/**/*.scss"
-                            ]
-                        },
-                        "output": {
-                            "styles": "{$config.dist}/css/demo1/skins/brand/"
-                        }
-                    },
-                    "aside": {
-                        "src": {
-                            "styles": [
-                                "{$config.path.src}/sass/theme/demos/demo1/aside/skins/**/*.scss"
-                            ]
-                        },
-                        "output": {
-                            "styles": "{$config.dist}/css/demo1/skins/aside/"
-                        }
-                    }
-                },
-                "pages": {
-                    "src": {
-                        "styles-by-demo": [
-                            "{$config.path.src}/sass/theme/pages/**/*.scss"
-                        ],
-                        "scripts": [
-                            "{$config.path.src}/js/theme/pages/**/*.js"
-                        ]
-                    },
-                    "output": {
-                        "styles-by-demo": "{$config.dist}/css/demo1/pages/",
-                        "scripts": "{$config.dist}/js/demo1/pages/"
-                    }
-                }
-            }
-        },
-        "media": {
+          "base": {
             "src": {
-                "media": [
-                    "{$config.path.src}/media/**/*.*"
+              "styles": [
+                "{$config.path.src}/sass/theme/demos/style.scss"
+              ],
+              "scripts": [
+                "{$config.path.src}/js/theme/core/*.js",
+                "{$config.path.src}/js/theme/core/base/**/*.js",
+                "{$config.path.src}/js/theme/core/**/*.js",
+                "{$config.path.src}/js/theme/demos/**/*.js"
+              ]
+            },
+            "bundle": {
+              "styles": "{$config.dist}/css/style.bundle.css",
+              "scripts": "{$config.dist}/js/scripts.bundle.js"
+            }
+          },
+          "skins": {
+            "header": {
+              "src": {
+                "styles": [
+                  "{$config.path.src}/sass/theme/demos/header/skins/**/*.scss"
+                ]
+              },
+              "output": {
+                "styles": "{$config.dist}/css/skins/header/"
+              }
+            },
+            "brand": {
+              "src": {
+                "styles": [
+                  "{$config.path.src}/sass/theme/demos/brand/skins/**/*.scss"
+                ]
+              },
+              "output": {
+                "styles": "{$config.dist}/css/skins/brand/"
+              }
+            },
+            "aside": {
+              "src": {
+                "styles": [
+                  "{$config.path.src}/sass/theme/demos/aside/skins/**/*.scss"
+                ]
+              },
+              "output": {
+                "styles": "{$config.dist}/css/skins/aside/"
+              }
+            }
+          },
+          "pages": {
+            "src": {
+              "styles-kim": [
+                "{$config.path.src}/sass/theme/pages/**/*.scss"
+              ],
+              "scripts": [
+                "{$config.path.src}/js/theme/pages/**/*.js"
+              ]
+            },
+            "output": {
+              "styles-kim": "{$config.dist}/css/pages/",
+              "scripts": "{$config.dist}/js/pages/"
+            }
+          }
+        },
+        "images": {
+            "src": {
+                "images": [
+                    "{$config.path.src}/images/**/*.*"
                 ]
             },
             "output": {
-                "media": "{$config.dist}/media/"
+                "images": "{$config.dist}/images/"
             }
         }
     }

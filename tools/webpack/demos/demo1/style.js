@@ -7,4 +7,4 @@
  */
 
 // demo styles
-require("../../../../resources/assets/src/sass/theme/demos/demo1/style.scss");
+require("../../../../resources/assets/src/sass/theme/demos/style.scss");

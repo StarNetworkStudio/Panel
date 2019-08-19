@@ -10,18 +10,18 @@
 ////////////////////////////////////////////////////////////////
 
 // 1: Include global config
-@import "../../config";
+@import "../config";
 
 // 2: Include demo config (that overrides the above global config)
 @import "config";
 
 // 3: Bootstrap Include
-@import "../../../bootstrap/variables";
-@import "../../../../../../../tools/node_modules/bootstrap/scss/bootstrap";
-@import "../../../bootstrap/bootstrap.scss";
+@import "../../bootstrap/variables";
+@import "../../../../../../tools/node_modules/bootstrap/scss/bootstrap";
+@import "../../bootstrap/bootstrap";
 
 // 4: Core Include
-@import "../../core/include";
+@import "../core/include";
 ////////////////////////////////////////////////////////////////
 ///////////// DO NOT MODIFY ABOVE INCLUDE ORDER ////////////////
 ////////////////////////////////////////////////////////////////

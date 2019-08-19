@@ -55,7 +55,7 @@ const release = true;
 const apiUrl = false; // boolean
 const rootPath = path.resolve(__dirname, "..");
 const frameworkPath = path.resolve(__dirname, "..");
-const distPath = rootPath + "/resources/assets";
+const distPath = rootPath + "/public";
 const configPath = rootPath + "/tools";
 const assetDistPath = distPath + "/dist";
 const srcPath = rootPath + "/resources/assets/src";
@@ -92,7 +92,7 @@ files = files.filter((filename) => {
 });
 
 // parse comments to get the output location
-files.forEach((filename) => {
+    files.forEach((filename) => {
     // get file content
     const text = fs.readFileSync(filename).toString();
     // use parser plugin to parse the comment.
@@ -227,10 +227,10 @@ module.exports = function () {
             new MiniCssExtractPlugin({
                 filename: "[name].css",
             }),
-            // copy media
+            // copy images
             new CopyWebpackPlugin([{
-                from: srcPath + "/media",
-                to: assetDistPath + "/media",
+                from: srcPath + "/images",
+                to: assetDistPath + "/images",
             }]),
             // webpack log message
             new WebpackMessages({
@@ -342,20 +342,20 @@ module.exports = function () {
                                         }
                                     }
                                 }
-                                // the rest of images put in media/misc/
-                                return "media/misc/" + url;
+                                // the rest of images put in images/misc/
+                                return "images/misc/" + url;
                             },
                             // rewrite path in css
                             publicPath: (url, resourcePath) => {
                                 if (imageReference[url]) {
                                     // fix image rewrite path
                                     const filePath = pathWithoutFile(imageReference[url]);
-                                    return slash(path.relative(assetDistPath + "/" + filePath, assetDistPath + "/media") + "/" + url);
+                                    return slash(path.relative(assetDistPath + "/" + filePath, assetDistPath + "/images") + "/" + url);
                                 }
                                 if (nodeMedia[url]) {
                                     return "images/" + url;
                                 }
-                                return "../../media/misc/" + url;
+                                return "../../images/misc/" + url;
                             },
                         }
                     }]

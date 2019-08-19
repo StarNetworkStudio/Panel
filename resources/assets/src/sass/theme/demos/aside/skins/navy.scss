@@ -1,12 +1,11 @@
 //
-// Aside Light Skin
+// Aside Dark Blue Skin
 //
 
 
 
-
 // Include framework config
-@import "../../../../config";
+@import "../../../config";
 
 // Include demo config
 @import "../../config";
@@ -15,19 +14,18 @@
 @import "../../header/config";
 
 // Include aside config
-@import "../../aside/config";
+@import "../config";
 
-// Aside
+// Build Aside Skin
 .kt-aside {
-	background-color: kt-get($kt-layout-skins, light);
-	box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.08);
+	background-color: kt-get($kt-layout-skins, navy);
 
 	// Scrollbar
-	@include kt-perfect-scrollbar-skin(#e0e2f0);
+	@include kt-perfect-scrollbar-skin(#637099);
 
 	// Footer
 	.kt-aside__footer {
-		background-color: #f6f7fd;
+		background-color: #1f2231;
 
 		.btn {
 			@include kt-transition();
@@ -35,14 +33,14 @@
 			
 			i {
 				@include kt-transition();
-				color: #99a7df;
+				color: #364b8b;
 			}
 		}
 
 		.show .btn,
 		.btn:hover {
 			@include kt-transition();
-			background-color: darken(#f6f7fd, 6%);
+			background-color: #191b27;
 
 			i {
 				@include kt-transition();
@@ -53,7 +51,7 @@
 }
 
 // Build Aside Menu Skin
-@include kt-menu-ver-build-skin(kt-get($kt-aside-config, menu), light);
+@include kt-menu-ver-build-skin(kt-get($kt-aside-config, menu), navy);
 
 // Modify icon color for flaticon2 icons
 .kt-aside {
@@ -61,9 +59,10 @@
 		> .kt-menu__nav {
 			.kt-menu__item {
 				> .kt-menu__link {
-					.kt-menu__link-text {
-						font-weight: 500;
-					}	
+					[class^="flaticon2-"],
+					[class*=" flaticon2-"] {
+						color: #434d6b;
+					}
 				}
 			}
 		}

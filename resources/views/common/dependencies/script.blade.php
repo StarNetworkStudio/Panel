@@ -32,12 +32,12 @@
 <!-- end::Global Config -->
 <!--begin::Global Theme Bundle(used by all pages) -->
 <script src="{{assets('vendors/global/vendors.bundle.js')}}" type="text/javascript"></script>
-<script src="{{assets('js/demo1/scripts.bundle.js')}}" type="text/javascript"></script>
+<script src="{{assets('js/scripts.bundle.js')}}" type="text/javascript"></script>
 <!--end::Global Theme Bundle -->
 <!--begin::Page Vendors(used by this page) -->
 @yield('script')
 <script src="{{assets('vendors/custom/fullcalendar/fullcalendar.bundle.js')}}" type="text/javascript"></script>
 <!--end::Page Vendors -->
 <!--begin::Page Scripts(used by this page) -->
-<script src="{{assets('js/demo1/pages/dashboard.js')}}" type="text/javascript"></script>
+<script src="{{assets('js/pages/dashboard.js')}}" type="text/javascript"></script>
 <!--end::Page Scripts -->

@@ -63,9 +63,9 @@ $kt-error404-v4-btn-color: #f7098f;
 }
 
 .kt-bg-error404-v4{
-	background-image:url('../../../../media/misc/404-bg4.jpg');
+	background-image:url('../../../../images/misc/404-bg4.jpg');
 
 	@include kt-mobile{
-		background-image:url('../../../../media/misc/bg-mobile-4.jpg') !important;
+		background-image:url('../../../../images/misc/bg-mobile-4.jpg') !important;
 	}
 }

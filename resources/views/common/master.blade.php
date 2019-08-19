@@ -24,7 +24,7 @@
   </script>
   <!--end::Fonts -->
   @include('common.dependencies.style')
-  <link rel="shortcut icon" href="{{assets('media/logos/favicon.ico')}}"/>
+  <link rel="shortcut icon" href="{{assets('images/logos/favicon.ico')}}"/>
 </head>
 
 @php
