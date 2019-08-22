@@ -263,7 +263,7 @@ $kt-wizard-v2-font: #918ea7;
 	}
 }
 
-// Responsive mode(ref $kt-images-breakpoints in framework\_config.scss)
+// Responsive mode(ref $kt-media-breakpoints in framework\_config.scss)
 // Above 1200px
 @include kt-media-above(xl) {
 	.kt-wizard-v2 {

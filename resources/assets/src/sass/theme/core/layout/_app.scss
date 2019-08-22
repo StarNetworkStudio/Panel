@@ -96,7 +96,7 @@ $kt-app-config: (
 
 // Tablet & Mobile Mode.  
 .kt-app {
-     // Media range 1024px and below(see: $kt-images-breakpoints in sass/theme/_config.scss and sass/themes/core/_mixins.scss)
+     // Media range 1024px and below(see: $kt-media-breakpoints in sass/theme/_config.scss and sass/themes/core/_mixins.scss)
      @include kt-tablet-and-mobile {
         .kt-app__aside {
             padding: 35px 15px 15px 15px;

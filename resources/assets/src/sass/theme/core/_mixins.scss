@@ -287,7 +287,7 @@
 
 // Breakpoint mixins
 // Layout Breakpoints
-// Define the minimum and maximum dimensions at which your layout will change, adapting to different screen sizes, for use in images queries.
+// Define the minimum and maximum dimensions at which your layout will change, adapting to different screen sizes, for use in media queries.
 
 @mixin kt-media-below($width) {
     @media (max-width: #{kt-media-breakpoint($width)}) {

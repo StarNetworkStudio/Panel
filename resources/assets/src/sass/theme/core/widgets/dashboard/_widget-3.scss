@@ -131,7 +131,7 @@
 	}
 }
 
-// Responsive mode(ref $kt-images-breakpoints in framework\_config.scss)
+// Responsive mode(ref $kt-media-breakpoints in framework\_config.scss)
 // Below 1200px
 @include kt-media-below(xl) {
 	.kt-widget-3 {

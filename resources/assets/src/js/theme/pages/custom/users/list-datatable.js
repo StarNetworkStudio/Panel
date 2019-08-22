@@ -76,7 +76,7 @@ var KTUsersListDatatable = function() {
 					if (number > 5) {
 						output = '<div class="kt-user-card-v2">\
 								<div class="kt-user-card-v2__pic">\
-									<img src="https://keenthemes.com/metronic/preview/assets/images/users/' + user_img + '" alt="photo">\
+									<img src="https://keenthemes.com/metronic/preview/assets/media/users/' + user_img + '" alt="photo">\
 								</div>\
 								<div class="kt-user-card-v2__details">\
 									<a href="#" class="kt-user-card-v2__name">' + data.first_name + ' ' +data.last_name + '</a>\
@@ -142,7 +142,7 @@ var KTUsersListDatatable = function() {
 					var output = '\
                         <div class="kt-user-card-v2">\
                             <div class="kt-user-card-v2__pic">\
-                                <img src="https://keenthemes.com/metronic/preview/assets/images/client-logos/logo' + img + '" alt="photo">\
+                                <img src="https://keenthemes.com/metronic/preview/assets/media/client-logos/logo' + img + '" alt="photo">\
                             </div>\
                             <div class="kt-user-card-v2__details">\
                                 <a href="#" class="kt-user-card-v2__name">' + data.department + '</a>\

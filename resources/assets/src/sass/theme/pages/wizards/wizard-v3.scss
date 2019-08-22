@@ -293,7 +293,7 @@ $kt-wizard-v3-label-font: kt-base-color(label, 2);
 	}
 }
 
-// Responsive mode(ref $kt-images-breakpoints in framework\_config.scss)
+// Responsive mode(ref $kt-media-breakpoints in framework\_config.scss)
 // Above 1200px
 @include kt-media-above(xl) {
 	.kt-wizard-v3 {

@@ -60,10 +60,10 @@
 }
 
 .kt-bg-error404-v2{
-	background-image:url('../../../../images/misc/404-bg2.jpg');
+	background-image:url('../../../images/misc/404-bg2.jpg');
 
 	@include kt-mobile{
-		background-image:url('../../../../images/misc/bg-mobile-2.jpg');
+		background-image:url('../../../images/misc/bg-mobile-2.jpg');
 	}
 }
 
