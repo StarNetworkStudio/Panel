@@ -11,8 +11,8 @@ var getPaths = function (outPaths) {
   outputs.forEach(function (output) {
     // has demo placeholder
     if (output.indexOf('**') !== -1) {
-      func.getDemos().forEach(function (demo) {
-        paths.push(output.replace('**', demo));
+      func.getDemos().forEach(function () {
+        paths.push(output.replace('**'));
       });
     } else {
       if (outPaths.length === 0) {

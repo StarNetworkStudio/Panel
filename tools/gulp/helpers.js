@@ -136,7 +136,7 @@ module.exports = {
      */
     outputChannel: function (path, outputFile, type) {
         if (!allAssets) {
-            if (args.sass && ['styles'].indexOf(type) === -1) {
+            if (args.sass && ['styles', 'styles-by-demo'].indexOf(type) === -1) {
                 return lazypipe().pipe(function () {
                     // noop
                 });
@@ -400,6 +400,7 @@ module.exports = {
                 switch (type) {
                     case 'styles':
                         if (bundle.bundle.hasOwnProperty(type)) {
+
                             // default css bundle
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssRewriter(bundle.bundle[type])()).pipe(concat(outputFile)).pipe(_self.cssChannel()());
                             var output = _self.outputChannel(bundle.bundle[type], outputFile, type)();
@@ -409,6 +410,7 @@ module.exports = {
                             streams.push(stream);
                         }
                         break;
+
                     case 'scripts':
                         if (bundle.bundle.hasOwnProperty(type)) {
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(concat(outputFile)).pipe(_self.jsChannel()());
@@ -465,7 +467,21 @@ module.exports = {
                                 stream.pipe(output);
                             }
                             streams.push(stream);
+                            break;
+                        case 'styles-by-demo':
+                            // custom scss with suffix demos
+                            module.exports.getDemos().forEach(function () {
+                                // custom page scss
+                                stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel([
+                                    '../resources/assets/src/sass/theme/demos/', // release default package
+                                ])());// pipe(rename({ suffix: '.' + demo })).
 
+                                var output = _self.outputChannel(bundle.output[type], undefined, type)();
+                                if (output) {
+                                    stream.pipe(output);
+                                }
+                                streams.push(stream);
+                            });
                             break;
                         case 'scripts':
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.jsChannel()());
