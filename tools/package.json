@@ -133,10 +133,7 @@
         "yarn-install": "^1.0.0"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "webpack",
-        "watch": "webpack --watch",
-        "localhost": "node --max-old-space-size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js --open"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Keenthemes",
     "license": "ISC",

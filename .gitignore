@@ -7,3 +7,4 @@
 .idea
 .vscode
 tools/node_modules
+yarn-error.log
