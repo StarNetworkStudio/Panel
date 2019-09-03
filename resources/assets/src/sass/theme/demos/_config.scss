@@ -13,24 +13,24 @@ $kt-state-colors: (
         inverse: #ffffff
     ),
     metal: (
-        base: #d3dae6, 
+        base: #d3dae6,
         inverse: #586272
-    ),  
+    ),
     light: (
         base: #ffffff,
-        inverse: #282a3c 
+        inverse: #282a3c
     ),
     dark: (
         base: lighten(#4c467a, 12%),
-        inverse: #ffffff 
+        inverse: #ffffff
     ),
     accent: (
         base: #00c5dc,
-        inverse: #ffffff 
+        inverse: #ffffff
     ),
     focus: (
         base: #9816f4,
-        inverse: #ffffff 
+        inverse: #ffffff
     ),
 
     // Bootstrap states
@@ -53,7 +53,7 @@ $kt-state-colors: (
     danger: (
         base: #fd397a,
         inverse: #ffffff
-    )    
+    )
 );
 
 // Page

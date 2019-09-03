@@ -30,13 +30,13 @@ $kt-media-breakpoints: (
 
     // Small screen / phone
     sm: 576px,
-    
+
     // Medium screen / tablet
     md: 768px,
-    
+
     // Large screen / desktop
     lg: 1024px, //1024px,
-    
+
     // Extra large screen / wide desktop
     xl: 1399px
 ) !default;
@@ -52,7 +52,7 @@ $kt-action-icons: (
     close: '\f191',
     down: '\f110',
     up: '\f113',
-    left: '\f111',  
+    left: '\f111',
     right: '\f112',
     plus: '\f2c2',
     minus: '\f28e'
@@ -62,7 +62,7 @@ $kt-action-icons: (
 $kt-action-bold-icons: (
     down: '\f1b1',
     up: '\f1b3',
-    left: '\f1b2',  
+    left: '\f1b2',
     right: '\f1a9'
 ) !default;
 
@@ -98,24 +98,24 @@ $kt-state-colors: (
         inverse: $kt-brand-inverse-color
     ),
     metal: (
-        base: #d3dae6, 
+        base: #d3dae6,
         inverse: #586272
-    ),  
+    ),
     light: (
         base: #ffffff,
-        inverse: #282a3c 
+        inverse: #282a3c
     ),
     dark: (
         base: lighten(#4c467a, 12%),
-        inverse: #ffffff 
+        inverse: #ffffff
     ),
     accent: (
         base: #00c5dc,
-        inverse: #ffffff 
+        inverse: #ffffff
     ),
     focus: (
         base: #9816f4,
-        inverse: #ffffff 
+        inverse: #ffffff
     ),
 
     // Bootstrap states
@@ -138,7 +138,7 @@ $kt-state-colors: (
     danger: (
         base: #fd397a,
         inverse: #ffffff
-    )    
+    )
 )!default;
 
 // Base colors
@@ -151,16 +151,16 @@ $kt-base-colors: (
     ),
     shape: (
         1: #f0f3ff,
-        2: #e8ecfa, 
+        2: #e8ecfa,
         3: #93a2dd,
         4: #646c9a
-    ),    
+    ),
     grey: (
         1: #f7f8fa, //#f4f5f8
         2: #ebedf2,
         3: darken(#ebedf2, 3%),
         4: darken(#ebedf2, 6%)
-    )    
+    )
 ) !default;
 
 // Social network colors(see: https://brandcolors.net/)
@@ -197,9 +197,9 @@ $kt-social-colors: (
 
 // Root Font Settings
 $kt-font-families: (
-    regular: 'Poppins',  
+    regular: 'Poppins',
     heading: 'Poppins'
-) !default; 
+) !default;
 
 // Root Font Settings
 $kt-font-size: (
@@ -207,9 +207,9 @@ $kt-font-size: (
         desktop: 13px,
         tablet: 12px,
         mobile: 12px
-    ), 
+    ),
     weight: 300
-) !default; 
+) !default;
 
 // General Link Settings
 $kt-font-color: (
@@ -218,7 +218,7 @@ $kt-font-color: (
         default: kt-state-color(brand),
         hover: darken(kt-state-color(brand), 6%)
     )
-) !default; 
+) !default;
 
 // Portlet settings
 $kt-portlet: (

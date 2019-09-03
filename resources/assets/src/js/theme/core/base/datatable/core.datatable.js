@@ -3463,7 +3463,7 @@
 		// By default the stirngs will be in the plugin source and here can override it
 		translate: {
 			records: {
-				processing: 'Please wait...',
+				processing: '请稍等...',
 				noRecords: 'No records found',
 			},
 			toolbar: {

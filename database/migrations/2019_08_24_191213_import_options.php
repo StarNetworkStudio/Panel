@@ -11,7 +11,12 @@ class ImportOptions extends Migration
      */
     public function up()
     {
-        //
+        // import options
+        $options = config('options');
+
+        foreach ($options as $key => $value) {
+            Option::set($key, $value);
+        }
     }
 
     /**
@@ -21,6 +26,6 @@ class ImportOptions extends Migration
      */
     public function down()
     {
-        //
+        DB::table('options')->delete();
     }
 }

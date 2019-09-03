@@ -2,7 +2,7 @@
 // Class definition
 
 var KTBlockUIDemo = function () {
-    
+
     // Private functions
 
     // Basic demo
@@ -20,7 +20,7 @@ var KTBlockUIDemo = function () {
             KTApp.block('#kt_blockui_1_content', {
                 overlayColor: '#000000',
                 state: 'primary'
-            });  
+            });
 
             setTimeout(function() {
                 KTApp.unblock('#kt_blockui_1_content');
@@ -45,7 +45,7 @@ var KTBlockUIDemo = function () {
                 overlayColor: '#000000',
                 type: 'v2',
                 state: 'success',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             setTimeout(function() {
@@ -107,7 +107,7 @@ var KTBlockUIDemo = function () {
                 overlayColor: '#000000',
                 type: 'v2',
                 state: 'success',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             setTimeout(function() {
@@ -169,7 +169,7 @@ var KTBlockUIDemo = function () {
                 overlayColor: '#000000',
                 type: 'v2',
                 state: 'success',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             setTimeout(function() {
@@ -230,7 +230,7 @@ var KTBlockUIDemo = function () {
             KTApp.block('#kt_blockui_4_4_modal .modal-content', {
                 overlayColor: '#000000',
                 state: 'success',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             setTimeout(function() {
@@ -255,13 +255,13 @@ var KTBlockUIDemo = function () {
         // public functions
         init: function() {
             demo1();
-            demo2(); 
-            demo3(); 
-            demo4(); 
+            demo2();
+            demo3();
+            demo4();
         }
     };
 }();
 
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
     KTBlockUIDemo.init();
 });

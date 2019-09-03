@@ -29,13 +29,13 @@ var KTPortletTools = function () {
         portlet.on('afterCollapse', function(portlet) {
             setTimeout(function() {
                 toastr.warning('Before collapse event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         portlet.on('beforeExpand', function(portlet) {
             setTimeout(function() {
                 toastr.info('Before expand event fired!');
-            }, 100);  
+            }, 100);
         });
 
         portlet.on('afterExpand', function(portlet) {
@@ -54,7 +54,7 @@ var KTPortletTools = function () {
         portlet.on('afterRemove', function(portlet) {
             setTimeout(function() {
                 toastr.warning('After remove event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         // Reload event handlers
@@ -92,13 +92,13 @@ var KTPortletTools = function () {
         portlet.on('afterCollapse', function(portlet) {
             setTimeout(function() {
                 toastr.warning('Before collapse event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         portlet.on('beforeExpand', function(portlet) {
             setTimeout(function() {
                 toastr.info('Before expand event fired!');
-            }, 100);  
+            }, 100);
         });
 
         portlet.on('afterExpand', function(portlet) {
@@ -117,7 +117,7 @@ var KTPortletTools = function () {
         portlet.on('afterRemove', function(portlet) {
             setTimeout(function() {
                 toastr.warning('After remove event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         // Reload event handlers
@@ -155,13 +155,13 @@ var KTPortletTools = function () {
         portlet.on('afterCollapse', function(portlet) {
             setTimeout(function() {
                 toastr.warning('Before collapse event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         portlet.on('beforeExpand', function(portlet) {
             setTimeout(function() {
                 toastr.info('Before expand event fired!');
-            }, 100);  
+            }, 100);
         });
 
         portlet.on('afterExpand', function(portlet) {
@@ -180,7 +180,7 @@ var KTPortletTools = function () {
         portlet.on('afterRemove', function(portlet) {
             setTimeout(function() {
                 toastr.warning('After remove event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         // Reload event handlers
@@ -190,7 +190,7 @@ var KTPortletTools = function () {
             KTApp.block(portlet.getSelf(), {
                 type: 'loader',
                 state: 'success',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             // update the content here
@@ -200,7 +200,7 @@ var KTPortletTools = function () {
             }, 2000);
         });
     }
- 
+
     // Demo 4
     var demo4 = function() {
         // This portlet is lazy initialized using data-portlet="true" attribute. You can access to the portlet object as shown below and override its behavior
@@ -216,13 +216,13 @@ var KTPortletTools = function () {
         portlet.on('afterCollapse', function(portlet) {
             setTimeout(function() {
                 toastr.warning('Before collapse event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         portlet.on('beforeExpand', function(portlet) {
             setTimeout(function() {
                 toastr.info('Before expand event fired!');
-            }, 100);  
+            }, 100);
         });
 
         portlet.on('afterExpand', function(portlet) {
@@ -241,7 +241,7 @@ var KTPortletTools = function () {
         portlet.on('afterRemove', function(portlet) {
             setTimeout(function() {
                 toastr.warning('After remove event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         // Reload event handlers
@@ -251,7 +251,7 @@ var KTPortletTools = function () {
             KTApp.block(portlet.getSelf(), {
                 type: 'loader',
                 state: 'brand',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             // update the content here
@@ -277,13 +277,13 @@ var KTPortletTools = function () {
         portlet.on('afterCollapse', function(portlet) {
             setTimeout(function() {
                 toastr.warning('Before collapse event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         portlet.on('beforeExpand', function(portlet) {
             setTimeout(function() {
                 toastr.info('Before expand event fired!');
-            }, 100);  
+            }, 100);
         });
 
         portlet.on('afterExpand', function(portlet) {
@@ -302,7 +302,7 @@ var KTPortletTools = function () {
         portlet.on('afterRemove', function(portlet) {
             setTimeout(function() {
                 toastr.warning('After remove event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         // Reload event handlers
@@ -312,7 +312,7 @@ var KTPortletTools = function () {
             KTApp.block(portlet.getSelf(), {
                 type: 'loader',
                 state: 'brand',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             // update the content here
@@ -347,13 +347,13 @@ var KTPortletTools = function () {
         portlet.on('afterCollapse', function(portlet) {
             setTimeout(function() {
                 toastr.warning('Before collapse event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         portlet.on('beforeExpand', function(portlet) {
             setTimeout(function() {
                 toastr.info('Before expand event fired!');
-            }, 100);  
+            }, 100);
         });
 
         portlet.on('afterExpand', function(portlet) {
@@ -372,7 +372,7 @@ var KTPortletTools = function () {
         portlet.on('afterRemove', function(portlet) {
             setTimeout(function() {
                 toastr.warning('After remove event fired!');
-            }, 2000);            
+            }, 2000);
         });
 
         // Reload event handlers
@@ -382,7 +382,7 @@ var KTPortletTools = function () {
             KTApp.block(portlet.getSelf(), {
                 type: 'loader',
                 state: 'brand',
-                message: 'Please wait...'
+                message: '请稍等...'
             });
 
             // update the content here

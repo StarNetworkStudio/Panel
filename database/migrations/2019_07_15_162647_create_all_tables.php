@@ -40,7 +40,7 @@ class CreateAllTables extends Migration
             $table->string('status',20)->nullable();
         });
 
-        Schema::create('system', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->string('k')->primary();
             $table->string('v',1500)->nullable();
         });

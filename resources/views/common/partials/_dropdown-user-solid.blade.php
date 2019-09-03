@@ -1,5 +1,5 @@
 <div class="kt-user-card kt-margin-b-40 kt-margin-b-30-tablet-and-mobile"
-     style="background-image: url({{assets('media/misc/head_bg_sm.jpg')}})">
+     style="background-image: url({{assets('images/misc/head_bg_sm.jpg')}})">
   <div class="kt-user-card__wrapper">
     <div class="kt-user-card__pic">
       <!--use "kt-rounded" class for rounded avatar style-->

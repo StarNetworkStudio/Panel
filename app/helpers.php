@@ -27,8 +27,8 @@ if (!function_exists('assets')) {
     }
 }
 
-if (!function_exists('panel_menu')) {
-    function panel_menu($type)
+if (!function_exists('menu')) {
+    function menu($type)
     {
         $menu = config('menu');
 
@@ -141,6 +141,44 @@ if (!function_exists('panel_menu')) {
         return $content;
     }
 
+}
+
+if (! function_exists('option')) {
+    /**
+     * Get / set the specified option value.
+     *
+     * If an array is passed as the key, we will assume you want to set an array of values.
+     *
+     * @param  array|string  $key
+     * @param  mixed  $default
+     * @param  raw    $raw  return raw value without convertion
+     * @return mixed
+     */
+    function option($key = null, $default = null, $raw = false)
+    {
+        $options = app('options');
+
+        if (is_null($key)) {
+            return $options;
+        }
+
+        if (is_array($key)) {
+            foreach ($key as $innerKey => $innerValue) {
+                $options->set($innerKey, $innerValue);
+            }
+            return;
+        }
+
+        return $options->get($key, $default, $raw);
+    }
+}
+
+if (! function_exists('option_localized')) {
+
+    function option_localized($key = null, $default = null, $raw = false)
+    {
+        return option($key.'_'.config('app.locale'), option($key));
+    }
 }
 
 if (!function_exists('get_datetime_string')) {

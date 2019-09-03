@@ -36,7 +36,6 @@
 <!--end::Global Theme Bundle -->
 <!--begin::Page Vendors(used by this page) -->
 @yield('script')
-<script src="{{assets('vendors/custom/fullcalendar/fullcalendar.bundle.js')}}" type="text/javascript"></script>
 <!--end::Page Vendors -->
 <!--begin::Page Scripts(used by this page) -->
 <script src="{{assets('js/pages/dashboard.js')}}" type="text/javascript"></script>
