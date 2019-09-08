@@ -39,8 +39,8 @@ class OptionForm
     /**
      * Create a new option form instance.
      *
-     * @param  string  $id
-     * @param  string  $title
+     * @param string $id
+     * @param string $title
      * @return void
      */
     public function __construct($id, $title = self::AUTO_DETECT)
@@ -48,7 +48,7 @@ class OptionForm
         $this->id = $id;
 
         if ($title == self::AUTO_DETECT) {
-            $this->title = trans("options.$id.title");
+            $this->title = "title";
         } else {
             $this->title = $title;
         }
@@ -57,24 +57,24 @@ class OptionForm
     /**
      * Add option item to the form dynamically.
      *
-     * @param  string  $method
-     * @param  array   $params
+     * @param string $method
+     * @param array $params
      * @return OptionItem
      *
      * @throws \BadMethodCallException
      */
     public function __call($method, $params)
     {
-        if (! in_array($method, ['text', 'checkbox', 'textarea', 'select', 'group'])) {
+        if (!in_array($method, ['text', 'checkbox', 'textarea', 'select', 'group'])) {
             throw new BadMethodCallException("Method [$method] does not exist on option form.");
         }
 
         // Assign name for option item
-        if (! isset($params[1]) || Arr::get($params, 1) == OptionForm::AUTO_DETECT) {
-            $params[1] = Arr::get(trans("options.$this->id.$params[0]"), 'title', trans("options.$this->id.$params[0]"));
+        if (!isset($params[1]) || Arr::get($params, 1) == OptionForm::AUTO_DETECT) {
+            $params[1] = Arr::get("$params[0]", 'title', "$params[0]");
         }
 
-        $class = new ReflectionClass('App\Services\OptionForm'.Str::title($method));
+        $class = new ReflectionClass('App\Services\OptionForm' . Str::title($method));
         // Use ReflectionClass to create a new OptionFormItem instance
         $item = $class->newInstanceArgs($params);
         $item->setParentId($this->id);
@@ -86,7 +86,7 @@ class OptionForm
     /**
      * Set the box type of option form.
      *
-     * @param  string  $type
+     * @param string $type
      * @return $this
      */
     public function type($type)
@@ -99,13 +99,13 @@ class OptionForm
     /**
      * Add a hint to option form.
      *
-     * @param  array  $info
+     * @param array $info
      * @return $this
      */
     public function hint($hintContent = self::AUTO_DETECT)
     {
         if ($hintContent == self::AUTO_DETECT) {
-            $hintContent = trans("options.$this->id.hint");
+            $hintContent = "$this->id.hint";
         }
 
         $this->hint = view('common.option-form.hint')->with('hint', $hintContent)->render();
@@ -116,8 +116,8 @@ class OptionForm
     /**
      * Add a piece of data to the option form.
      *
-     * @param  string|array  $key
-     * @param  mixed   $value
+     * @param string|array $key
+     * @param mixed $value
      * @return $this
      */
     public function with($key, $value = null)
@@ -134,7 +134,7 @@ class OptionForm
     /**
      * Add a button at the footer of option form.
      *
-     * @param  array  $info
+     * @param array $info
      * @return $this
      */
     public function addButton(array $info)
@@ -142,13 +142,13 @@ class OptionForm
         $info = array_merge([
             'style' => 'default',
             'class' => [],
-            'href'  => '',
-            'text'  => 'BUTTON',
-            'type'  => 'button',
-            'name'  => '',
+            'href' => '',
+            'text' => 'BUTTON',
+            'type' => 'button',
+            'name' => '',
         ], $info);
 
-        $classes = "btn btn-{$info['style']} ".implode(' ', (array) Arr::get($info, 'class'));
+        $classes = "btn btn-{$info['style']} " . implode(' ', (array)Arr::get($info, 'class'));
 
         if ($info['href']) {
             $this->buttons[] = "<a href='{$info['href']}' class='$classes'>{$info['text']}</a>";
@@ -162,14 +162,14 @@ class OptionForm
     /**
      * Add a message to the top of option form.
      *
-     * @param  string $msg
-     * @param  string $style
+     * @param string $msg
+     * @param string $style
      * @return $this
      */
     public function addMessage($msg = self::AUTO_DETECT, $style = 'info')
     {
         if ($msg == self::AUTO_DETECT) {
-            $msg = trans("options.$this->id.message");
+            $msg = "$this->id.message";
         }
 
         $this->messages[] = "<div class='alert alert-$style'><div class='alert-text'>$msg</div></div>";
@@ -206,7 +206,7 @@ class OptionForm
     /**
      * Add callback which will be always executed.
      *
-     * @param  callable $callback
+     * @param callable $callback
      * @return $this
      */
     public function always(callable $callback)
@@ -219,7 +219,7 @@ class OptionForm
     /**
      * Handle the HTTP post request and update modified options.
      *
-     * @param  callable $callback
+     * @param callable $callback
      * @return $this
      */
     public function handle(callable $callback = null)
@@ -228,11 +228,11 @@ class OptionForm
         $allPostData = $request->all();
 
         if ($request->isMethod('POST') && Arr::get($allPostData, 'option') == $this->id) {
-            if (! is_null($callback)) {
+            if (!is_null($callback)) {
                 call_user_func($callback, $this);
             }
 
-            if (! is_null($this->hookBefore)) {
+            if (!is_null($this->hookBefore)) {
                 call_user_func($this->hookBefore, $this);
             }
 
@@ -252,7 +252,7 @@ class OptionForm
             }
 
             foreach ($postOptionQueue as $item) {
-                if ($item instanceof OptionFormCheckbox && ! isset($allPostData[$item->id])) {
+                if ($item instanceof OptionFormCheckbox && !isset($allPostData[$item->id])) {
                     // preset value for checkboxes which are not checked
                     $allPostData[$item->id] = false;
                 }
@@ -264,7 +264,7 @@ class OptionForm
                 }
             }
 
-            if (! is_null($this->hookAfter)) {
+            if (!is_null($this->hookAfter)) {
                 call_user_func($this->hookAfter, $this);
             }
 
@@ -277,7 +277,7 @@ class OptionForm
     /**
      * Load value from $this->values & options by given id.
      *
-     * @param  string $id
+     * @param string $id
      * @return mixed
      */
     protected function getValueById($id)
@@ -337,17 +337,17 @@ class OptionForm
      */
     public function render()
     {
-        if (! is_null($this->alwaysCallback)) {
+        if (!is_null($this->alwaysCallback)) {
             call_user_func($this->alwaysCallback, $this);
         }
 
         // attach submit button to the form
-        if (! $this->renderWithoutSubmitButton) {
+        if (!$this->renderWithoutSubmitButton) {
             $this->addButton([
                 'style' => 'primary',
-                'text'  => '提交',
-                'type'  => 'submit',
-                'name'  => 'submit_'.$this->id,
+                'text' => '提交',
+                'type' => 'submit',
+                'name' => 'submit_' . $this->id,
             ]);
         }
 
@@ -408,7 +408,7 @@ class OptionFormItem
     public function hint($hintContent = OptionForm::AUTO_DETECT)
     {
         if ($hintContent == OptionForm::AUTO_DETECT) {
-            $hintContent = trans("options.$this->parentId.$this->id.hint");
+            $hintContent = "$this->parentId.$this->id.hint";
         }
 
         $this->hint = view('common.option-form.hint')->with('hint', $hintContent)->render();
@@ -433,7 +433,7 @@ class OptionFormItem
     public function description($description = OptionForm::AUTO_DETECT)
     {
         if ($description == OptionForm::AUTO_DETECT) {
-            $description = trans("options.$this->parentId.$this->id.description");
+            $description = trans("$this->parentId.$this->id.description");
         }
 
         $this->description = $description;
@@ -449,7 +449,7 @@ class OptionFormText extends OptionFormItem
     public function placeholder($placeholder = OptionForm::AUTO_DETECT)
     {
         if ($placeholder == OptionForm::AUTO_DETECT) {
-            $key = "options.$this->parentId.$this->id.placeholder";
+            $key = "$this->parentId.$this->id.placeholder";
             $placeholder = trans()->has($key) ? trans($key) : '';
         }
 
@@ -476,7 +476,7 @@ class OptionFormCheckbox extends OptionFormItem
     public function label($label = OptionForm::AUTO_DETECT)
     {
         if ($label == OptionForm::AUTO_DETECT) {
-            $label = trans("options.$this->parentId.$this->id.label");
+            $label = trans("$this->parentId.$this->id.label");
         }
 
         $this->label = $label;
@@ -487,7 +487,7 @@ class OptionFormCheckbox extends OptionFormItem
     public function render()
     {
         return view('common.option-form.checkbox')->with([
-            'id'    => $this->id,
+            'id' => $this->id,
             'value' => $this->value,
             'label' => $this->label,
             'disabled' => $this->disabled,
@@ -509,8 +509,8 @@ class OptionFormTextarea extends OptionFormItem
     public function render()
     {
         return view('common.option-form.textarea')->with([
-            'id'    => $this->id,
-            'rows'  => $this->rows,
+            'id' => $this->id,
+            'rows' => $this->rows,
             'value' => $this->value,
             'disabled' => $this->disabled,
         ]);
@@ -531,8 +531,8 @@ class OptionFormSelect extends OptionFormItem
     public function render()
     {
         return view('common.option-form.select')->with([
-            'id'       => $this->id,
-            'options'  => $this->options,
+            'id' => $this->id,
+            'options' => $this->options,
             'selected' => $this->value,
             'disabled' => $this->disabled,
         ]);
@@ -546,7 +546,7 @@ class OptionFormGroup extends OptionFormItem
     public function text($id, $value = null, $placeholder = OptionForm::AUTO_DETECT)
     {
         if ($placeholder == OptionForm::AUTO_DETECT) {
-            $key = "options.$this->parentId.$this->id.placeholder";
+            $key = "$this->parentId.$this->id.placeholder";
             $placeholder = trans()->has($key) ? trans($key) : '';
         }
 
@@ -558,7 +558,7 @@ class OptionFormGroup extends OptionFormItem
     public function addon($value = OptionForm::AUTO_DETECT)
     {
         if ($value == OptionForm::AUTO_DETECT) {
-            $value = trans("options.$this->parentId.$this->id.addon");
+            $value = trans("$this->parentId.$this->id.addon");
         }
 
         $this->items[] = ['type' => 'addon', 'id' => null, 'value' => $value];
@@ -575,8 +575,8 @@ class OptionFormGroup extends OptionFormItem
                 $item['value'] = option_localized($item['id']);
             }
 
-            $rendered[] = view('common.option-form.'.$item['type'])->with([
-                'id'    => $item['id'],
+            $rendered[] = view('common.option-form.' . $item['type'])->with([
+                'id' => $item['id'],
                 'value' => $item['value'],
                 'placeholder' => Arr::get($item, 'placeholder'),
             ]);

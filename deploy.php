@@ -10,7 +10,7 @@ set('repository', 'git@github.com:starnetworkstudio/Panel.git');
 set('git_tty', true);
 
 add('shared_files', []);
-add('shared_dirs', ['tools/node_modules', 'vendor','resources/assets/dist']);
+add('shared_dirs', ['resources/assets/dist']);
 add('writable_dirs', []);
 
 // 保存最近五次部署，这样的话回滚最多也只能回滚到前 5 个版本
