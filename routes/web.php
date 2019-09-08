@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::any('/options', 'AdminController@options');
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
+    Route::get('/status', 'AdminController@status');
+
     Route::view('/users', 'admin.users');
 
     Route::any('/user-list.json', 'AdminController@getUserList');

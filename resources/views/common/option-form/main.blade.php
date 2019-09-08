@@ -16,17 +16,18 @@
       @if ($renderWithoutTable)
         @each('common.option-form.item', $items, 'item')
       @else
+        @foreach($items as $item)
           <div class="form-group row">
-          @foreach($items as $item)
-              @unless ($renderInputTagsOnly)
-                <label for="example-text-input" class="col-2 col-form-label">{{ $item->name }} {!! $item->hint ?? '' !!}</label>
-              @endunless
+            @unless ($renderInputTagsOnly)
+              <label for="example-text-input"
+                     class="col-lg-3 col-form-label">{{ $item->name }} {!! $item->hint ?? '' !!}</label>
+            @endunless
 
-              <td class="value">
-                @include('common.option-form.item', compact('item'))
-              </td>
-          @endforeach
+            <td class="value">
+              @include('common.option-form.item', compact('item'))
+            </td>
           </div>
+        @endforeach
       @endif
 
     </div>

@@ -17,6 +17,7 @@ $menu['admin'] = [
     ['title' => '用户管理', 'link' => 'admin/users', 'icon' => 'fa fa-users'],
 //    ['title' => '邀请码管理', 'link' => 'admin/invite', 'icon' => 'fa fa-puzzle-piece'],
     ['title' => '系统设置', 'link' => 'admin/options', 'icon' => 'fa fa-cog'],
+    ['title' => '运行状态', 'link' => 'admin/status', 'icon' => 'fa fa-battery-three-quarters'],
     ['title' => '系统运行日志', 'link' => 'admin/logs', 'icon' => 'fa fa-cubes'],
 ];
 
