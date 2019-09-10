@@ -45,10 +45,10 @@ if (!function_exists('menu')) {
             throw new InvalidArgumentException;
         }
 
-        return panel_menu_render($menu[$type]);
+        return menu_render($menu[$type]);
     }
 
-    function panel_menu_render($data)
+    function menu_render($data)
     {
         $content = '';
 
@@ -91,7 +91,7 @@ if (!function_exists('menu')) {
                     </span>
                     </li>',
                         trans($value['title'])
-                    ) . panel_menu_children($value) .
+                    ) . menu_children($value) .
                     '</ul>
                     </div>';
             } else {
@@ -115,7 +115,7 @@ if (!function_exists('menu')) {
     }
 
     //子菜单
-    function panel_menu_children($data)
+    function menu_children($data)
     {
         $content = '';
         foreach ((array)@$data['children'] as $childKey => $childValue) {
@@ -143,15 +143,15 @@ if (!function_exists('menu')) {
 
 }
 
-if (! function_exists('option')) {
+if (!function_exists('option')) {
     /**
      * Get / set the specified option value.
      *
      * If an array is passed as the key, we will assume you want to set an array of values.
      *
-     * @param  array|string  $key
-     * @param  mixed  $default
-     * @param  raw    $raw  return raw value without convertion
+     * @param array|string $key
+     * @param mixed $default
+     * @param raw $raw return raw value without convertion
      * @return mixed
      */
     function option($key = null, $default = null, $raw = false)
@@ -163,9 +163,8 @@ if (! function_exists('option')) {
         }
 
         if (is_array($key)) {
-            foreach ($key as $innerKey => $innerValue) {
-                $options->set($innerKey, $innerValue);
-            }
+            $options->set($key);
+
             return;
         }
 
@@ -173,21 +172,20 @@ if (! function_exists('option')) {
     }
 }
 
-if (! function_exists('option_localized')) {
-
+if (!function_exists('option_localized')) {
     function option_localized($key = null, $default = null, $raw = false)
     {
-        return option($key.'_'.config('app.locale'), option($key));
+        return option($key . '_' . config('app.locale'), option($key));
     }
 }
 
-if (! function_exists('humanize_db_type')) {
+if (!function_exists('humanize_db_type')) {
     function humanize_db_type($type = null): string
     {
         $map = [
-            'mysql'  => 'MySQL/MariaDB',
+            'mysql' => 'MySQL/MariaDB',
             'sqlite' => 'SQLite',
-            'pgsql'  => 'PostgreSQL',
+            'pgsql' => 'PostgreSQL',
         ];
 
         $type = $type ?: config('database.default');
@@ -196,7 +194,7 @@ if (! function_exists('humanize_db_type')) {
     }
 }
 
-if (! function_exists('get_db_config')) {
+if (!function_exists('get_db_config')) {
     function get_db_config($type = null)
     {
         $type = $type ?: config('database.default');
@@ -218,7 +216,7 @@ if (!function_exists('get_datetime_string')) {
     }
 }
 
-if (! function_exists('get_client_ip')) {
+if (!function_exists('get_client_ip')) {
     /**
      * Return the client IP address.
      *
@@ -229,28 +227,20 @@ if (! function_exists('get_client_ip')) {
      */
     function get_client_ip(): string
     {
+        $request = request();
         if (option('ip_get_method') == '0') {
-            // Use `HTTP_X_FORWARDED_FOR` if available first
-            $ip = Arr::get(
-                $_SERVER,
-                'HTTP_X_FORWARDED_FOR',
-                // Fallback to `HTTP_CLIENT_IP`
-                Arr::get(
-                    $_SERVER,
-                    'HTTP_CLIENT_IP',
-                    // Fallback to `REMOTE_ADDR`
-                    Arr::get($_SERVER, 'REMOTE_ADDR')
-                )
-            );
+            $ip = $request->server('HTTP_X_FORWARDED_FOR')
+                ?? $request->server('HTTP_CLIENT_IP')
+                ?? $request->server('REMOTE_ADDR');
         } else {
-            $ip = Arr::get($_SERVER, 'REMOTE_ADDR');
+            $ip = $request->server('REMOTE_ADDR');
         }
 
         return $ip;
     }
 }
 
-if (! function_exists('is_request_secure')) {
+if (!function_exists('is_request_secure')) {
     /**
      * Check whether the request is secure or not.
      * True is always returned when "X-Forwarded-Proto" header is set.
@@ -262,18 +252,9 @@ if (! function_exists('is_request_secure')) {
      */
     function is_request_secure(): bool
     {
-        if (Arr::get($_SERVER, 'HTTPS') == 'on') {
-            return true;
-        }
-
-        if (Arr::get($_SERVER, 'HTTP_X_FORWARDED_PROTO') == 'https') {
-            return true;
-        }
-
-        if (Arr::get($_SERVER, 'HTTP_X_FORWARDED_SSL') == 'on') {
-            return true;
-        }
-
-        return false;
+        $request = request();
+        return $request->server('HTTPS') === 'on'
+            || $request->server('HTTP_X_FORWARDED_PROTO') === 'https'
+            || $request->server('HTTP_X_FORWARDED_SSL') === 'on';
     }
 }
